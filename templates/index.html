@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<!-- Create a div where the circle will take place -->
+
+<style>
+    .alternatives {
+        position: absolute;
+        top: 420px;
+    }
+    #left {
+        left: 220px;
+    }
+    #leftView {
+        border: 1px solid #008000;
+    }
+    #center {
+        left: 590px;
+    }
+    #right {
+        left: 840px;
+    }
+    #rightView {
+        border: 1px solid #FF0000;
+    }
+
+    .tooltip {
+        position: absolute;
+        text-align: left;
+        padding: .2rem;
+        background: #FFFFFF;
+        color: #313639;
+        border: 0.5px solid #313639;
+        border-radius: 4px;
+        pointer-events: none;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.75rem;
+    }
+</style>
+
+<body>
+    <div id="dataviz_axisZoom">
+        <script>
+
+            // set the dimensions and margins of the graph
+            var mainMargin = {top: 10, right: 30, bottom: 30, left: 60},
+                mainWidth = 520 - mainMargin.left - mainMargin.right,
+                mainHeight = 400 - mainMargin.top - mainMargin.bottom;
+            radius = 1;
+
+            d3.select("#dataviz_axisZoom").append("svg").attr("width", 450).attr("height", 5);
+
+            // append the SVG object to the body of the page
+            var SVG = d3.select("#dataviz_axisZoom")
+                .append("svg")
+                .attr("id", "main")
+                .attr("width", mainWidth + mainMargin.left + mainMargin.right)
+                .attr("height", mainHeight + mainMargin.top + mainMargin.bottom);
+
+
+            //Read the data
+            d3.csv("http://127.0.0.1:5000/get-data", function(data) {
+
+                //d3.request('http://127.0.0.1:5000/get-scags').get();
+
+                // Add X axis
+                var x = d3.scaleLinear()
+                    .domain([1, 9])
+                    .range([ 0, mainWidth]);
+
+                var xAxis = SVG.append("g")
+                    .attr("transform", "translate(73,365)")
+                    .call(d3.axisBottom(x));
+
+                // Add Y axis
+                var y = d3.scaleLinear()
+                    .domain([0, 1346913161])
+                    .range([ mainHeight, 0]);
+
+                var yAxis = SVG.append("g")
+                    .attr("transform", "translate(73,5)")
+                    .call(d3.axisLeft(y));
+
+                // Add a clipPath: everything out of this area won't be drawn.
+                var clip = SVG.append("defs").append("SVG:clipPath")
+                    .attr("id", "clip")
+                    .append("SVG:rect")
+                    .attr("width", mainWidth)
+                    .attr("height", mainHeight)
+                    .attr("transform", "translate(73,5)")
+                    .attr("x", 0)
+                    .attr("y", 0);
+
+                // Create the scatter variable: where both the circles and the brush take place
+                var scatter = SVG.append('g')
+                    .attr("clip-path", "url(#clip)")
+                    .attr("class", "circles");
+
+                var div = d3.select("body").append("div")
+                    .attr("class", "tooltip")
+                    .style("opacity", 0);
+
+                var alternatives = d3.select("body")
+                    .selectAll(".alternatives")
+                    .style("opacity", 0);
+
+                var leftAlt = d3.select("body").select("#left");
+
+                leftAlt.on("mousedown", function () {
+                    replaceViewWithAlternative("#left", zoomNo)
+                });
+
+                var leftScagsData;
+
+                var leftAltBar = d3.select("body").select("#left").select("#leftBar");
+
+                leftAltBar.on("mouseover", function () {
+                    console.log("HEY")
+                    div.html(leftScagsData.key + ": " + leftScagsData.value)
+                            .style("left", (d3.event.pageX + 10) + "px")
+                            .style("top", (d3.event.pageY - 15) + "px");
+                });
+
+                //var centerAlt = d3.select("body").select("#center");
+
+                //centerAlt.on("mousedown", function () {
+                //    replaceViewWithAlternative("#center", zoomNo)
+                //});
+
+                var rightAlt = d3.select("body").select("#right");
+
+                rightAlt.on("mousedown", function () {
+                    replaceViewWithAlternative("#right", zoomNo)
+                });
+
+                var shiftDown = false;
+                var xcoord = 0;
+                var ycoord = 0;
+                var zoomNo = 0;
+                var xMinMax = [1.0, 9.0];
+                var yMinMax = [0.0, 1346913161.0];
+                var xRange = xMinMax[1]-xMinMax[0];
+                var yRange = yMinMax[1]-yMinMax[0];
+
+                SVG.on("dblclick", function () {
+                    if(shiftDown){
+                        --zoomNo;
+                    }else{
+                        ++zoomNo;
+                    }
+                    var coords= d3.mouse(this);
+                    xcoord = coords[0]-73;
+                    ycoord = coords[1]-5;
+                })
+                    .on("dragend", function(){
+                        var newX = d3.event.transform.rescaleX(x);
+                        var newY = d3.event.transform.rescaleY(y);
+
+                        var newXCoord = newX.invert(xcoord).toFixed(1);
+                        var newYCoord = newY.invert(ycoord).toFixed(1);
+
+                        d3.request("http://127.0.0.1:5000/get-coords?x="+newXCoord+"&y="+newYCoord+"&zoomNo="+zoomNo).get();
+
+                        dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
+                            dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
+                                dispatchOverview.call("updateOverview", this)));
+                    })
+                    .on("mousedown", function () {});
+
+                // Add circles
+                scatter
+                    .selectAll("circle")
+                    .data(data)
+                    .enter()
+                    .append("circle")
+                    .attr("transform", "translate(73,5)")
+                    .attr("cx", function (d) { return x(d.avg_vote); } )
+                    .attr("cy", function (d) { return y(d.rlwide_gross_income); } )
+                    .attr("r", 4)
+                    .style("fill", "#61a3a9")
+                    .style("opacity", 0.5)
+                    //.on("mousedown", mousedowned)
+                    .on('mouseover', function (d, i) {
+                        d3.select(this).transition()
+                            .duration('50')
+                            .style("fill", "#eb8c34")
+                            .style("opacity", 1);
+
+                        div.transition()
+                            .duration(50)
+                            .style("opacity", 1);
+
+                        div.html("Average Vote: " + d.avg_vote + "<br> Number of User Votes: " + d.votes +
+                            "<br> World Wide Gross Income: $" + d.rlwide_gross_income +
+                            "<br> Number of Reviews From Critics: " + d.reviews_from_critics + "<br> Duration: " +
+                            d.duration + " min. <br> Genre(s): " + d.genre + "<br> Produced in: " +
+                            d.country + "<br>  Year of Production: " + d.year)
+                            .style("left", (d3.event.pageX + 10) + "px")
+                            .style("top", (d3.event.pageY - 15) + "px");
+                    })
+                    .on('mouseout', function (d, i) {
+                        d3.select(this).transition()
+                            .duration('50')
+                            .style("fill", "#61a3a9")
+                            .style("opacity", 0.5);
+
+                        div.transition()
+                            .duration(50)
+                            .style("opacity", 0);
+                    });
+
+
+
+                d3.select("body")
+                    .on('keydown', function() {
+                        if (d3.event.keyCode === 16 || d3.event.shiftKey){
+                            shiftDown = true;
+                        }})
+                    .on('keyup', function () {
+                        if (d3.event.keyCode === 16 || d3.event.shiftKey){
+                            shiftDown = false;
+                        }
+                    });
+
+                SVG.call(d3.zoom()
+                    .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
+                    .extent([[0, 0], [mainWidth, mainHeight]])
+                    .on("zoom", debounce(zoomed, 1000)))
+                    .on("wheel.zoom", null)
+                    .on("dragstart", function () {
+                        var coords= d3.mouse(this);
+                        xcoord = coords[0]-73;
+                        ycoord = coords[1]-5;
+
+                        dispatchOverview.call("updateOverview", this);
+                });
+
+
+                var dispatch = d3.dispatch("updateAlternatives");
+                var dispatchScag = d3.dispatch("updateBarchart");
+                var dispatchOverview = d3.dispatch("updateOverview");
+
+                var leftXAxisRange = 0;
+                var leftYAxisRange = 0;
+                var centerXAxisRange = 0;
+                var centerYAxisRange = 0;
+                var rightXAxisRange = 0;
+                var rightYAxisRange = 0;
+
+                dispatchOverview.on("updateOverview", function () {
+                    d3.select("#center").select("#centerView").remove();
+
+                    var newOverview = d3.select("#center")
+                        .append("svg")
+                        .attr("id", "centerView")
+                        .attr("width", (mainWidth + mainMargin.left + mainMargin.right)*0.6)
+                        .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.6);
+
+                    var xOverview = d3.scaleLinear()
+                        .domain([1, 9])
+                        .range([ 0, (mainWidth*0.53)]);
+
+                    // Add Y axis
+                    var yOverview = d3.scaleLinear()
+                        .domain([0, 1346913161])
+                        .range([ (mainHeight*0.53), 0]);
+
+                    newOverview.append("g")
+                        .attr("transform", "translate(73,"+ (mainWidth*0.5-19) +")")
+                        .call(d3.axisBottom(xOverview));
+
+                    newOverview.append("g")
+                        .attr("transform", "translate(73,5)")
+                        .call(d3.axisLeft(yOverview));
+
+                    var clip = newOverview.append("defs").append("centerView" + ":clipPath")
+                        .attr("id", "clip")
+                        .append("centerView" + ":rect")
+                        .attr("width", mainWidth*0.5)
+                        .attr("height", mainHeight*0.5)
+                        .attr("transform", "translate(73,5)")
+                        .attr("x", 0)
+                        .attr("y", 0);
+
+                    var scatter = newOverview.append('g')
+                        .attr("clip-path", "url(#clip)");
+
+                    scatter
+                        .selectAll("circle")
+                        .data(data)
+                        .enter()
+                        .append("circle")
+                        .attr("transform", "translate(73,5)")
+                        .attr("cx", function (d) { return xOverview(d.avg_vote);})
+                        .attr("cy", function (d) { return yOverview(d.rlwide_gross_income);})
+                        .attr("r", 2)
+                        .style("fill", "#61a3a9")
+                        .style("opacity", 0.5);
+
+                    var focusX;
+                    var focusY;
+
+                    if (zoomNo === 1){
+                        focusX = x.invert(xcoord).toFixed(1);
+                        focusY = y.invert(ycoord).toFixed(1);
+                    }else{
+                        focusX = zoomX.invert(xcoord-73).toFixed(1);
+                        focusY = zoomY.invert(ycoord-5).toFixed(1);
+                    }
+
+                    var focusXRange = [focusX - (xRange / (zoomNo * 4)), parseFloat(focusX) + (xRange / (zoomNo * 4))];
+                    var focusYRange = [focusY - (yRange / (zoomNo * 4)), parseFloat(focusY) + (yRange / (zoomNo * 4))];
+
+
+                    var focusRegion = newOverview.append("rect")
+                        .attr("transform", "translate("+ 73 +")")
+       			        .attr("x", xOverview(focusXRange[0]))
+       			        .attr("y", yOverview(focusYRange[1]))
+       			        .attr("height", -(yOverview(focusYRange[1])-yOverview(focusYRange[0])))
+       			        .attr("width", xOverview(focusXRange[1]-focusXRange[0]+1))
+       			        .style("stroke", "black")
+       			        .style("fill", "none")
+       			        .style("stroke-width", 1);
+
+                    setTimeout(() => {
+                        var leftView = newOverview.append("rect")
+                            .attr("transform", "translate(73,5)")
+                            .attr("x", xOverview(leftXAxisRange[0]))
+       			            .attr("y", yOverview(leftYAxisRange[1]))
+       			            .attr("height", -(yOverview(leftYAxisRange[1])-yOverview(leftYAxisRange[0])))
+       			            .attr("width", xOverview(leftXAxisRange[1]-leftXAxisRange[0]+1))
+       			            .style("stroke", "green")
+       			            .style("fill", "none")
+       			            .style("stroke-width", 1);
+                    }, 3000)
+
+                    setTimeout(() => {
+                        var rightView = newOverview.append("rect")
+       			            .attr("transform", "translate(73,5)")
+                            .attr("x", xOverview(rightXAxisRange[0]))
+       			            .attr("y", yOverview(rightYAxisRange[1]))
+       			            .attr("height", -(yOverview(rightYAxisRange[1])-yOverview(rightYAxisRange[0])))
+       			            .attr("width", xOverview(rightXAxisRange[1]-rightXAxisRange[0]+1))
+       			            .style("stroke", "red")
+       			            .style("fill", "none")
+       			            .style("stroke-width", 1);
+                    }, zoomNo*4000)
+                });
+
+                dispatchScag.on("updateBarchart", function(datapath, viewid, callback) {
+
+                    var currentDonut;
+                    var radius;
+
+                    if(viewid === "#currentBar"){
+                        d3.select("#dataviz_axisZoom").select(viewid).remove();
+
+                        currentDonut = d3.select("#dataviz_axisZoom")
+                        .append("svg")
+                            .attr("id", "currentBar")
+                            .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
+                            .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
+                            .attr("transform", "translate("+ -((mainWidth + mainMargin.left + mainMargin.right) * 0.2) +
+                                ", " + -((mainHeight + mainMargin.top + mainMargin.bottom) * 0.85) + ")")
+                        .append("g")
+                            .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
+
+                        viewid = "#dataviz_axisZoom";
+
+                        radius = Math.min(mainWidth * 0.35, (mainHeight * 0.35)) / 2 - 30;
+                    }else{
+                        d3.select(viewid).select(viewid+"Bar").remove();
+
+                        currentDonut = d3.select(viewid)
+                        .append("svg")
+                            .attr("id", viewid.substring(1)+"Bar")
+                            .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
+                            .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
+                            .attr("transform", "translate("+ ((mainWidth + mainMargin.left + mainMargin.right) * 0.59) +
+                                ", " + -((mainHeight + mainMargin.top + mainMargin.bottom) * 0.42) + ")")
+                        .append("g")
+                            .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
+
+                        radius = Math.min(mainWidth * 0.3, (mainHeight * 0.3)) / 2 - 30;
+                    }
+
+                    var color = d3.scaleOrdinal(d3.schemeDark2);
+
+                    d3.json(datapath, function (scags) {
+                        var result = {};
+                        var keys = d3.map(scags).keys();
+                        var values = d3.map(scags).values();
+
+                        for (var i = 0; i < keys.length; i++) {
+                            result[keys[i]] = values[i];
+                        }
+
+                        if(viewid === "#left"){
+                            leftScagsData = result;
+                        }
+
+                        // Compute the position of each group on the pie:
+                        var pie = d3.pie()
+                            .sort(null) // Do not sort group by size
+                            .value(function(d) {return d.value; });
+                        var data_ready = pie(d3.entries(result));
+
+                        // The arc generator
+                        var arc = d3.arc()
+                            .innerRadius(radius * 0.5)         // This is the size of the donut hole
+                            .outerRadius(radius * 0.8);
+
+                        // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+                        currentDonut
+                            .selectAll('allSlices')
+                            .data(data_ready)
+                            .enter()
+                            .append('path')
+                            .attr('d', arc)
+                            .attr('fill', function(d){ return(color(d.data.key)) })
+                            .attr("stroke", "white")
+                            .style("stroke-width", "1px")
+                            .style("opacity", 0.7);
+                    });
+
+                    if (callback !== undefined){
+                       callback();
+                    }
+                });
+
+                dispatch.on("updateAlternatives", function(datapath, viewid, callback){
+
+                    var  barDatapath;
+
+                    if(viewid === "#left"){
+                        barDatapath = 'http://127.0.0.1:5000/get-left-scagnostics';
+
+                    }else if(viewid === "#right"){
+                         barDatapath = 'http://127.0.0.1:5000/get-right-scagnostics';
+                    }
+
+                    dispatchScag.call("updateBarchart", this, barDatapath, viewid);
+
+                    d3.select(viewid).select(viewid+"View").remove();
+
+                    var newView = d3.select(viewid)
+                        .append("svg")
+                        .attr("id", viewid.substring(1)+"View")
+                        .attr("width", (mainWidth + mainMargin.left + mainMargin.right)*0.58)
+                        .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.55);
+
+                    d3.csv(datapath, function (newData) {
+
+                        newData.forEach(function(d) {
+                            d.avg_vote = +d.avg_vote; // convert to number
+                            d.rlwide_gross_income = +d.rlwide_gross_income;
+                        });
+
+                        var xView;
+                        var yView;
+
+                        xView = d3.scaleLinear()
+                                .domain(d3.extent(newData, function(d) {return d.avg_vote;}))
+                                .range([0, width*0.5]);
+
+                        yView = d3.scaleLinear()
+                                .domain(d3.extent(newData, function(d) {return d.rlwide_gross_income;}))
+                                .range([height*0.5, 0]);
+
+                        if(viewid === "#left"){
+                            leftXAxisRange = d3.extent(newData, function(d) {return d.avg_vote;});
+                            leftYAxisRange = d3.extent(newData, function(d) {return d.rlwide_gross_income;});
+                        }else if(viewid === "#right"){
+                            rightXAxisRange = d3.extent(newData, function(d) {return d.avg_vote;});
+                            rightYAxisRange = d3.extent(newData, function(d) {return d.rlwide_gross_income;});
+                        }
+
+                        newView.append("g")
+                            .attr("transform", "translate(73,"+ (mainWidth*0.5-20) +")")
+                            .call(d3.axisBottom(xView));
+
+                        newView.append("g")
+                            .attr("transform", "translate(73,5)")
+                            .call(d3.axisLeft(yView));
+
+                        var clip = newView.append("defs").append(viewid.substring(1) + "View" + ":clipPath")
+                            .attr("id", "clip")
+                            .append(viewid.substring(1) +" View" + ":rect")
+                            .attr("width", mainWidth*0.5)
+                            .attr("height", mainHeight*0.5)
+                            .attr("transform", "translate(73,5)")
+                            .attr("x", 0)
+                            .attr("y", 0);
+
+                        var scatter = newView.append('g')
+                            .attr("clip-path", "url(#clip)");
+
+                        scatter
+                            .selectAll("circle")
+                            .data(newData)
+                            .enter()
+                            .append("circle")
+                            .attr("transform", "translate(73,5)")
+                            .attr("cx", function (d) { return xView(d.avg_vote);})
+                            .attr("cy", function (d) { return yView(d.rlwide_gross_income);})
+                            .attr("r", 2)
+                            .style("fill", "#61a3a9")
+                            .style("opacity", 0.5);
+                    });
+
+                    if (callback !== undefined){
+                       callback();
+                    }
+
+                });
+
+                function debounce(fn, delay) {
+                    var timer = null;
+                    return function () {
+                        var context = this,
+                            args = arguments,
+                            event = d3.event;
+                        clearTimeout(timer);
+                        timer = setTimeout(function () {
+                            d3.event = event;
+                            fn.apply(context, args);
+                            }, delay);
+                    };
+                }
+
+                function mousedowned(d, i) {
+                    d3.select(this).transition()
+                        .attr("fill", "black")
+                        .transition()
+                        .attr("fill", d3.interpolateRainbow(i / 360))
+                        .attr("r", radius);
+                }
+
+                function replaceViewWithAlternative(viewid, zoomNo) {
+                    var scaleX = 0;
+                    var scaleY = 0;
+
+                    if(viewid === "#left"){
+                        scaleX = leftXAxisRange;
+                        scaleY = leftYAxisRange;
+
+                        xcoord = x(leftXAxisRange[0]+((leftXAxisRange[1]-leftXAxisRange[0])/2))
+                        ycoord = y(leftYAxisRange[0]+((leftYAxisRange[1]-leftYAxisRange[0])/2))
+                    }else if(viewid === "#right"){
+                        scaleX = rightXAxisRange;
+                        scaleY = rightYAxisRange;
+
+                        xcoord = x(rightXAxisRange[0]+((rightXAxisRange[1]-rightXAxisRange[0])/2))
+                        ycoord = y(rightYAxisRange[0]+((rightYAxisRange[1]-rightYAxisRange[0])/2))
+                    }
+
+                    var newX = d3.scaleLinear()
+                        .domain([scaleX[0], scaleX[1]])
+                        .range([ 0, mainWidth]);
+
+                    var newY = d3.scaleLinear()
+                        .domain([scaleY[0], scaleY[1]])
+                        .range([ mainHeight, 0]);
+
+                    var newXCoord = (scaleX[0] + (scaleX[1]-scaleX[0])/(zoomNo*2)).toFixed(1);
+                    var newYCoord = (scaleY[0] + (scaleY[1]-scaleY[0])/(zoomNo*2)).toFixed(1);
+
+                    d3.request("http://127.0.0.1:5000/get-coords?x="+newXCoord+"&y="+newYCoord+"&zoomNo="+zoomNo).get();
+
+                    // update axes with these new boundaries
+                    xAxis.call(d3.axisBottom(newX));
+                    yAxis.call(d3.axisLeft(newY));
+
+                    // update circle position
+                    scatter
+                        .selectAll("circle")
+                        .attr('cx', function(d) {return newX(d.avg_vote)})
+                        .attr('cy', function(d) {return newY(d.rlwide_gross_income)});
+
+                    dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
+                        dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
+                            dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics", "#currentBar",
+                                dispatchOverview.call("updateOverview", this))));
+                }
+
+                var zoomX;
+                var zoomY;
+
+                function zoomed() {
+
+                    // recover the new scale
+                    zoomX = d3.event.transform.rescaleX(x);
+                    zoomY = d3.event.transform.rescaleY(y);
+
+                    var newXCoord = zoomX.invert(xcoord-73).toFixed(1);
+                    var newYCoord = zoomY.invert(ycoord-5).toFixed(1);
+
+                    console.log("zoom x: " + newXCoord);
+                    console.log("zoom y: " + newYCoord);
+
+                    d3.request("http://127.0.0.1:5000/get-coords?x="+newXCoord+"&y="+newYCoord+"&zoomNo="+zoomNo).get();
+
+                    // update axes with these new boundaries
+                    xAxis.call(d3.axisBottom(zoomX));
+                    yAxis.call(d3.axisLeft(zoomY));
+
+                    // update circle position
+                    scatter
+                        .selectAll("circle")
+                        .attr('cx', function(d) {return zoomX(d.avg_vote)})
+                        .attr('cy', function(d) {return zoomY(d.rlwide_gross_income)});
+
+                    dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
+                        dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
+                            dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics", "#currentBar",
+                                dispatchOverview.call("updateOverview", this))));
+
+                    if (shiftDown) {
+                        alternatives.transition()
+                            .duration(50)
+                            .style("opacity", 0);
+                    } else {
+                        alternatives.transition()
+                            .duration(50)
+                            .style("opacity", 1);
+                    }
+                }
+            });
+
+            var currentDonut = d3.select("#dataviz_axisZoom")
+                            .append("svg")
+                            .attr("id", "currentBar");
+
+            //var scags = ["Outlying", "Skewed", "Clumpy", "Sparse", "Striated", "Convex", "Skinny", "Stringy",
+            //        "Monotonic"];
+            //
+            //var colorLegend = d3.scaleOrdinal()
+            //    .domain([0,9])
+            //    .range(d3.schemeDark2);
+            //
+            //d3.select("#dataviz_axisZoom").data(scags).enter().append("circle").attr("cx",function(d,i){return 30 + i*60}).attr("cy",130).attr("r", 6).style("fill", function(d){return colorLegend(d) });
+            //d3.select("#dataviz_axisZoom").data(scags).enter().append("circle").attr("cx",200).attr("cy",160).attr("r", 6).style("fill", colorLegend("Skewed"));
+            //d3.select("#dataviz_axisZoom").append("text").attr("x", 220).attr("y", 130).text("Outlying").style("font-size", "15px").attr("alignment-baseline","middle")
+            //d3.select("#dataviz_axisZoom").append("text").attr("x", 220).attr("y", 160).text("Skewed").style("font-size", "15px").attr("alignment-baseline","middle")
+
+        </script>
+    </div>
+
+    <div class="alternatives" id="left">
+        <script>
+
+            var leftBar = d3.select("#left")
+                            .append("svg")
+                            .attr("id", "leftBar");
+
+            var margin = {top: 10, right: 10, bottom: 10, left: 10},
+                width = 460 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
+
+            var leftView = d3.select("#left")
+                .append("svg")
+                .attr("id", "leftView")
+                .attr("width", ((width + margin.left + margin.right)*0.55 + 10))
+                .attr("height", ((height + margin.top + margin.bottom)*0.55 + 10));
+
+            d3.csv("http://127.0.0.1:5000/get-left", function(data) {
+
+                var x = d3.scaleLinear()
+                    .domain([4, 8])
+                    .range([0, width*0.55]);
+
+                leftView.append("g")
+                    .attr("transform", "translate(0,"+ (height*0.55+5) +")")
+                    .call(d3.axisBottom(x));
+
+                var y = d3.scaleLinear()
+                    .domain([0, 9])
+                    .range([height*0.55, 0]);
+
+                leftView.append("g")
+                    .attr("transform", "translate(0,5)")
+                    .call(d3.axisLeft(y));
+
+                var scatter = leftView.append('g')
+                    .attr("clip-path", "url(#clip)")
+                    .attr("class", "circles");
+
+                scatter
+                    .selectAll("circle")
+                    .data(data)
+                        .append("circle")
+                    .attr("cx", function (d) { return x(d.avg_vote);})
+                    .attr("cy", function (d) { return y(d.rlwide_gross_income);})
+                    .attr("r", 2)
+                    .style("fill", "#61a3a9")
+                    .style("opacity", 0.5);
+
+            });
+        </script>
+    </div>
+
+    <div class="alternatives" id="center">
+        <script>
+            var margin = {top: 10, right: 10, bottom: 10, left: 10},
+                width = 460 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
+
+            var centerView = d3.select("#center")
+                .append("svg")
+                .attr("id", "centerView")
+                .attr("width", (width + margin.left + margin.right)*0.55)
+                .attr("height", (height + margin.top + margin.bottom)*0.55);
+
+            //d3.csv("http://127.0.0.1:5000/get-center", function(data) {
+            //
+            //    var x = d3.scaleLinear()
+            //        .domain([4, 8])
+            //        .range([0, width*0.55]);
+            //
+            //    //centerView.append("g")
+            //    //    .attr("transform", "translate(16,264)")
+            //    //    .call(d3.axisBottom(x));
+            //    //
+            //    var y = d3.scaleLinear()
+            //        .domain([0, 9])
+            //        .range([height*0.55, 0]);
+            //
+            //    //centerView.append("g")
+            //    //    .attr("transform", "translate(16,5)")
+            //    //    .call(d3.axisLeft(y));
+            //
+            //    var scatter = centerView.append('g')
+            //        .attr("clip-path", "url(#clip)")
+            //        .attr("class", "circles");
+            //
+            //    scatter
+            //        .selectAll("circle")
+            //        .data(data)
+            //        .enter()
+            //        .append("circle")
+            //        .attr("cx", function (d) { return x(d.avg_vote);})
+            //        .attr("cy", function (d) { return y(d.rlwide_gross_income);})
+            //        .attr("r", 2)
+            //        .style("fill", "#61a3a9")
+            //        .style("opacity", 0.5);
+            //
+            //});
+
+            //var centerBar = d3.select("#center")
+            //                .append("svg")
+            //                .attr("id", "centerBar");
+        </script>
+    </div>
+
+    <div class="alternatives" id="right">
+        <script>
+
+
+            var rightBar = d3.select("#right")
+                            .append("svg")
+                            .attr("id", "rightBar");
+
+            var margin = {top: 10, right: 10, bottom: 10, left: 10},
+                width = 460 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
+
+            var rightView = d3.select("#right")
+                .append("svg")
+                .attr("id", "rightView")
+                .attr("width", (width + margin.left + margin.right)*0.55)
+                .attr("height", (height + margin.top + margin.bottom)*0.55);
+
+            d3.csv("http://127.0.0.1:5000/get-right", function(data) {
+
+                var x = d3.scaleLinear()
+                    .domain([4, 8])
+                    .range([0, width*0.55]);
+
+                //centerView.append("g")
+                //    .attr("transform", "translate(16,264)")
+                //    .call(d3.axisBottom(x));
+                //
+                var y = d3.scaleLinear()
+                    .domain([0, 9])
+                    .range([height*0.55, 0]);
+
+                //centerView.append("g")
+                //    .attr("transform", "translate(16,5)")
+                //    .call(d3.axisLeft(y));
+
+                var scatter = rightView.append('g')
+                    .attr("clip-path", "url(#clip)")
+                    .attr("class", "circles");
+
+                scatter
+                    .selectAll("circle")
+                    .data(data)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", function (d) { return x(d.avg_vote);})
+                    .attr("cy", function (d) { return y(d.rlwide_gross_income);})
+                    .attr("r", 2)
+                    .style("fill", "#61a3a9")
+                    .style("opacity", 0.5);
+
+            });
+        </script>
+    </div>
+</body>
