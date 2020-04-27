@@ -25,9 +25,6 @@ variables:
   # Python version: 3.7
   pythonVersion: '3.7'
 
-  # R version: 3.5.3
-  rVersion: '3.5.3'
-
 stages:
 - stage: Build
   displayName: Build stage
@@ -40,11 +37,6 @@ stages:
       inputs:
         versionSpec: '$(pythonVersion)'
       displayName: 'Use Python $(pythonVersion)'
-
-    - task: UseRVersion@0
-        inputs:
-          versionSpec: '$(rVersion)'
-        displayName: 'Use R $(rVersion)'
     
     - script: |
         python -m venv antenv
@@ -86,11 +78,6 @@ stages:
             inputs:
               versionSpec: '$(pythonVersion)'
             displayName: 'Use Python version'
-
-          - task: UseRVersion@0
-              inputs:
-                versionSpec: '$(rVersion)'
-              displayName: 'Use R $(rVersion)'
 
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : MultipleAlternativeViews'
