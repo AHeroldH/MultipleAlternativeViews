@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ca92a679-cce0-450f-9d11-b70eee95b29d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/azure-pipelines.yml" beforeDir="false" afterPath="$PROJECT_DIR$/azure-pipelines.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +45,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.r.configuration.RSettingsProjectConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -189,7 +189,7 @@
       <workItem from="1587030675742" duration="2105000" />
       <workItem from="1587038102991" duration="51922000" />
       <workItem from="1587400202238" duration="52075000" />
-      <workItem from="1587799264377" duration="11745000" />
+      <workItem from="1587799264377" duration="12268000" />
     </task>
     <task id="LOCAL-00001" summary="removed torch from requirements">
       <created>1587912192093</created>
@@ -268,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587984572038</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="requirements file: rpy2 typo">
+      <created>1587985017768</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1587985017768</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -283,7 +290,8 @@
     <MESSAGE value="edited port in app" />
     <MESSAGE value="requirements file updated" />
     <MESSAGE value="requirements file: r2py updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="requirements file: r2py updated" />
+    <MESSAGE value="requirements file: rpy2 typo" />
+    <option name="LAST_COMMIT_MESSAGE" value="requirements file: rpy2 typo" />
   </component>
   <component name="WindowStateProjectService">
     <state x="320" y="126" key="#Inspections" timestamp="1587894070271">
@@ -299,10 +307,10 @@
       <screen x="0" y="23" width="1440" height="808" />
     </state>
     <state x="458" y="181" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1440.808@0.23.1440.808" timestamp="1587402506425" />
-    <state x="302" y="29" key="CommitChangelistDialog2" timestamp="1587984571922">
+    <state x="302" y="29" key="CommitChangelistDialog2" timestamp="1587985017643">
       <screen x="0" y="23" width="1440" height="808" />
     </state>
-    <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.808@0.23.1440.808" timestamp="1587984571922" />
+    <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.808@0.23.1440.808" timestamp="1587985017643" />
     <state width="1398" height="199" key="GridCell.Tab.0.bottom" timestamp="1587893429513">
       <screen x="0" y="23" width="1440" height="808" />
     </state>
@@ -355,18 +363,18 @@
     </state>
     <state width="1398" height="303" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1584266943158" />
     <state width="1398" height="256" key="GridCell.Tab.1.right/0.23.1440.808@0.23.1440.808" timestamp="1587399933810" />
-    <state x="221" y="66" key="SettingsEditor" timestamp="1587984992009">
+    <state x="221" y="66" key="SettingsEditor" timestamp="1587985910035">
       <screen x="0" y="23" width="1440" height="808" />
     </state>
-    <state x="221" y="66" key="SettingsEditor/0.23.1440.808@0.23.1440.808" timestamp="1587984992009" />
+    <state x="221" y="66" key="SettingsEditor/0.23.1440.808@0.23.1440.808" timestamp="1587985910035" />
     <state width="500" height="445" key="SwitcherDM" timestamp="1587894207684">
       <screen x="0" y="23" width="1440" height="808" />
     </state>
     <state width="500" height="445" key="SwitcherDM/0.23.1440.808@0.23.1440.808" timestamp="1587894207684" />
-    <state x="320" y="167" key="Vcs.Push.Dialog.v2" timestamp="1587984575160">
+    <state x="320" y="167" key="Vcs.Push.Dialog.v2" timestamp="1587985021899">
       <screen x="0" y="23" width="1440" height="808" />
     </state>
-    <state x="320" y="167" key="Vcs.Push.Dialog.v2/0.23.1440.808@0.23.1440.808" timestamp="1587984575160" />
+    <state x="320" y="167" key="Vcs.Push.Dialog.v2/0.23.1440.808@0.23.1440.808" timestamp="1587985021899" />
     <state x="378" y="49" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1587543874420">
       <screen x="0" y="23" width="1440" height="808" />
     </state>
