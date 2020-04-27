@@ -79,6 +79,11 @@ stages:
               versionSpec: '$(pythonVersion)'
             displayName: 'Use Python version'
 
+          - task: UseRVersion@0
+              inputs:
+                versionSpec: '$(rVersion)'
+              displayName: 'Use R $(rVersion)'
+
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : MultipleAlternativeViews'
             inputs:
