@@ -1,12 +1,9 @@
-cycler==0.10.0
-kiwisolver==1.0.1
-matplotlib==3.0.3
 numpy==1.16.2
 pandas==0.24.2
-Pillow==6.0.0
-pyparsing==2.4.0
 python-dateutil==2.8.0
 pytz==2019.1
 scipy==1.4.1
-seaborn==0.10.0
 six==1.12.0
+flask >=1.1.1
+flask_cors >=3.0.8
+r2py >=2.9.4
