@@ -62,7 +62,7 @@
 
 
             //Read the data
-            d3.csv("http://127.0.0.1:5000/get-data", function(data) {
+            d3.csv("https://multiplealternativeviews.azurewebsites.net/get-data", function(data) {
 
                 //d3.request('http://127.0.0.1:5000/get-scags').get();
 
@@ -162,10 +162,10 @@
                         var newXCoord = newX.invert(xcoord).toFixed(1);
                         var newYCoord = newY.invert(ycoord).toFixed(1);
 
-                        d3.request("http://127.0.0.1:5000/get-coords?x="+newXCoord+"&y="+newYCoord+"&zoomNo="+zoomNo).get();
+                        d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXCoord+"&y="+newYCoord+"&zoomNo="+zoomNo).get();
 
-                        dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
-                            dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
+                        dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
+                            dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right",
                                 dispatchOverview.call("updateOverview", this)));
                     })
                     .on("mousedown", function () {});
@@ -436,10 +436,10 @@
                     var  barDatapath;
 
                     if(viewid === "#left"){
-                        barDatapath = 'http://127.0.0.1:5000/get-left-scagnostics';
+                        barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-left-scagnostics';
 
                     }else if(viewid === "#right"){
-                         barDatapath = 'http://127.0.0.1:5000/get-right-scagnostics';
+                         barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-right-scagnostics';
                     }
 
                     dispatchScag.call("updateBarchart", this, barDatapath, viewid);
@@ -568,7 +568,7 @@
                     var newXCoord = (scaleX[0] + (scaleX[1]-scaleX[0])/(zoomNo*2)).toFixed(1);
                     var newYCoord = (scaleY[0] + (scaleY[1]-scaleY[0])/(zoomNo*2)).toFixed(1);
 
-                    d3.request("http://127.0.0.1:5000/get-coords?x="+newXCoord+"&y="+newYCoord+"&zoomNo="+zoomNo).get();
+                    d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXCoord+"&y="+newYCoord+"&zoomNo="+zoomNo).get();
 
                     // update axes with these new boundaries
                     xAxis.call(d3.axisBottom(newX));
@@ -580,9 +580,9 @@
                         .attr('cx', function(d) {return newX(d.avg_vote)})
                         .attr('cy', function(d) {return newY(d.rlwide_gross_income)});
 
-                    dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
-                        dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
-                            dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics", "#currentBar",
+                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
+                        dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right",
+                            dispatchScag.call("updateBarchart", this, "https://multiplealternativeviews.azurewebsites.net/get-current-scagnostics", "#currentBar",
                                 dispatchOverview.call("updateOverview", this))));
                 }
 
@@ -601,7 +601,7 @@
                     console.log("zoom x: " + newXCoord);
                     console.log("zoom y: " + newYCoord);
 
-                    d3.request("http://127.0.0.1:5000/get-coords?x="+newXCoord+"&y="+newYCoord+"&zoomNo="+zoomNo).get();
+                    d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXCoord+"&y="+newYCoord+"&zoomNo="+zoomNo).get();
 
                     // update axes with these new boundaries
                     xAxis.call(d3.axisBottom(zoomX));
@@ -613,9 +613,9 @@
                         .attr('cx', function(d) {return zoomX(d.avg_vote)})
                         .attr('cy', function(d) {return zoomY(d.rlwide_gross_income)});
 
-                    dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
-                        dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
-                            dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics", "#currentBar",
+                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
+                        dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right",
+                            dispatchScag.call("updateBarchart", this, "https://multiplealternativeviews.azurewebsites.net/get-current-scagnostics", "#currentBar",
                                 dispatchOverview.call("updateOverview", this))));
 
                     if (shiftDown) {
@@ -666,7 +666,7 @@
                 .attr("width", ((width + margin.left + margin.right)*0.55 + 10))
                 .attr("height", ((height + margin.top + margin.bottom)*0.55 + 10));
 
-            d3.csv("http://127.0.0.1:5000/get-left", function(data) {
+            d3.csv("https://multiplealternativeviews.azurewebsites.net/get-left", function(data) {
 
                 var x = d3.scaleLinear()
                     .domain([4, 8])
@@ -773,7 +773,7 @@
                 .attr("width", (width + margin.left + margin.right)*0.55)
                 .attr("height", (height + margin.top + margin.bottom)*0.55);
 
-            d3.csv("http://127.0.0.1:5000/get-right", function(data) {
+            d3.csv("https://multiplealternativeviews.azurewebsites.net/get-right", function(data) {
 
                 var x = d3.scaleLinear()
                     .domain([4, 8])

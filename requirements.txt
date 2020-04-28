@@ -6,3 +6,4 @@ scipy==1.4.1
 six==1.12.0
 flask >=1.1.1
 flask_cors >=3.0.8
+rpy2 >=2.9.4

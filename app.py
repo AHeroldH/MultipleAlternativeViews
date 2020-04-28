@@ -3,6 +3,7 @@
 import json
 from flask import Flask
 from flask import request
+from flask import render_template
 import pandas as pd
 from flask_cors import CORS
 import numpy as np
@@ -69,6 +70,9 @@ left_view = False
 center_view = False
 right_view = False
 
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 def scagnostics(x, y):
     all_scags = {}
@@ -432,5 +436,5 @@ def return_current_scagnostics():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='8000')
+    app.run(host='0.0.0.0', port='5000')
     #app.run()
