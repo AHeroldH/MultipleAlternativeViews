@@ -22,18 +22,22 @@ CORS(app)
 path = '.'
 df = pd.read_csv('movie-data.csv')  # "world_wide_gross_income", "avg_vote", "votes", "reviews_from_critics", "country",
 # "duration", "genre", "year"
+
+orig_x = [1.0, 9.0]
+orig_y = [0.0, 1515047671.0]
+
 x = [1.0, 9.0]
-y = [0.0, 1346913161.0]
+y = [0.0, 1515047671.0]
 xRange = x[1] - x[0]
 yRange = y[1] - y[0]
 no_of_zoom = 0
 
 left_view_x = [1.0, 9.0]
-left_view_y = [0.0, 1346913161.0]
+left_view_y = [0.0, 1515047671.0]
 center_view_x = [1.0, 9.0]
-center_view_y = [0.0, 1346913161.0]
+center_view_y = [0.0, 1515047671.0]
 right_view_x = [1.0, 9.0]
-right_view_y = [0.0, 1346913161.0]
+right_view_y = [0.0, 1515047671.0]
 first_zoom_scagnostics = {}
 with open('first_zoom_scagnostics.csv', mode='r') as infile:
     reader = csv.reader(infile)
@@ -62,13 +66,14 @@ with open('third_zoom_scagnostics.csv', mode='r') as infile:
                                                                                float(row[9]), float(row[10]),
                                                                                float(str(row[11])[0:len(str(row[11])) - 1])]
 rowNo = 0
-diff2 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+diff2 = 0
 diff3 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 diff1_scags = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 current_view_list = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 left_view = False
 center_view = False
 right_view = False
+current_scag = False
 
 @app.route("/")
 def index():
@@ -104,19 +109,29 @@ def return_data():
 def get_coords():
     global left_view
     global right_view
+    global current_scag
 
     left_view = False
     right_view = False
+    current_scag = False
 
     global no_of_zoom
     no_of_zoom = int(request.args['zoomNo'])
     global x
-    x_coord = float(request.args['x'])
-    x = [x_coord - xRange / (no_of_zoom * 4), x_coord + xRange / (no_of_zoom * 4)]
+    x_coord = ast.literal_eval(request.args['x'])
+
+    if no_of_zoom != 0:
+        x = x_coord
+    else:
+        x = orig_x
 
     global y
-    y_coord = float(request.args['y'])
-    y = [y_coord - yRange / (no_of_zoom * 4), y_coord + yRange / (no_of_zoom * 4)]
+    y_coord = ast.literal_eval(request.args['y'])
+
+    if no_of_zoom != 0:
+        y = y_coord
+    else:
+        y = orig_y
 
     global current_view_scagnostics
     global current_view_list
@@ -124,6 +139,8 @@ def get_coords():
                           & (df["rlwide_gross_income"] <= y[1])]
 
     current_view_scagnostics = scagnostics(data_in_view["avg_vote"], data_in_view["rlwide_gross_income"])
+
+    current_scag = True
 
     current_view_list = [current_view_scagnostics['outlying'], current_view_scagnostics['skewed'],
                          current_view_scagnostics['clumpy'], current_view_scagnostics['sparse'],
@@ -192,6 +209,13 @@ def set_left_view(comparable_views, current_view_list, key_list, val_list):
 
         # view_diff = diff_of_lists(scags, current_view_list)
 
+        window = view.split("; ")
+        window_x = ast.literal_eval(window[0])
+        window_y = ast.literal_eval(window[1])
+
+        if (((x[0] - 1.5) <= window_x[0] <= (x[1] + 1.5)) and ((x[0] - 1.5) <= window_x[1] <= (x[1] + 1.5))):
+            continue
+
         view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
 
         new_diff1 = max(diff1, view_diff)
@@ -225,7 +249,8 @@ def set_centre_view(comparable_views, current_view_list, key_list, val_list):
         window_y = ast.literal_eval(window[1])
 
         if (((left_view_x[0] - 1) <= window_x[0] <= (left_view_x[1] + 1)) and ((left_view_x[0] - 1) <= window_x[1] <=
-           (left_view_x[1] + 1))): #and (((left_view_y[0] - (1346913161 / (5829 / 8))) <= window_y[0] <=
+           (left_view_x[1] + 1))):
+            #and (((left_view_y[0] - (1346913161 / (5829 / 8))) <= window_y[0] <=
            #(left_view_y[1] + (1346913161 / (5829 / 8)))) and ((left_view_y[0] - (1346913161 / (5829 / 8))) <=
           # window_y[1] <= (left_view_y[1] + (1346913161 / (5829 / 8)))))):
             continue
@@ -272,18 +297,18 @@ def set_right_view(comparable_views, current_view_list, key_list, val_list):
         window_x = ast.literal_eval(window[0])
         window_y = ast.literal_eval(window[1])
 
-        if (((left_view_x[0] - 1.5) <= window_x[0] <= (left_view_x[1] + 1.5)) and ((left_view_x[0] - 1.5) <= window_x[1] <=
-            (left_view_x[1] + 1.5))):  # and (((left_view_y[0] - (1346913161 / (5829 / 8))) <= window_y[0] <=
-            # (left_view_y[1] + (1346913161 / (5829 / 8)))) and ((left_view_y[0] - (1346913161 / (5829 / 8))) <=
-            # window_y[1] <= (left_view_y[1] + (1346913161 / (5829 / 8)))))):
+        if ((((left_view_x[0] - 1.5) <= window_x[0] <= (left_view_x[1] + 1.5)) and ((left_view_x[0] - 1.5) <= window_x[1] <=
+            (left_view_x[1] + 1.5)))) or (((x[0] - 1) <= window_x[0] <= (x[1] + 1)) and ((x[0]
+            - 1) <= window_x[1] <= (x[1] + 1))):
             continue
 
         # view_diff = diff_of_lists(scags, current_view_list)
 
         view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
 
-        if view_diff in heap:
-            continue
+        for ele in heap:
+            if (ele-0.05) <= view_diff <= (ele+0.05):
+                continue
 
         if len(heap) < 10:
             heappush(heap, view_diff)
@@ -296,9 +321,14 @@ def set_right_view(comparable_views, current_view_list, key_list, val_list):
     print(heap)
 
     for ele in three_best_diff2:
+        if ele == 0:
+            continue
         if distance.euclidean(np.asarray(ele), np.asarray(diff1_scags)) > diff_1_2:
             diff_1_2 = distance.euclidean(np.asarray(ele), np.asarray(diff1_scags))
             diff2 = ele
+
+    if diff2 == 0:
+        set_right_view(comparable_views, current_view_list, key_list, val_list)
 
     view = key_list[val_list.index(diff2)]
     #heap = []
@@ -396,7 +426,6 @@ def return_right_data():
 
 @app.route('/get-left-scagnostics', methods=['GET', 'POST'])
 def return_left_scagnostics():
-    global left_view
     while left_view == False:
         time.sleep(0.100)
     left_scags = {"Outlying": diff1_scags[0], "Skewed": diff1_scags[1], "Clumpy": diff1_scags[2],
@@ -407,7 +436,6 @@ def return_left_scagnostics():
 
 @app.route('/get-center-scagnostics', methods=['GET', 'POST'])
 def return_center_scagnostics():
-    global center_view
     while center_view == False:
         time.sleep(0.100)
     center_scags = {"Outlying": diff2[0], "Skewed": diff2[1], "Clumpy": diff2[2], "Sparse": diff2[3],
@@ -418,7 +446,6 @@ def return_center_scagnostics():
 
 @app.route('/get-right-scagnostics', methods=['GET', 'POST'])
 def return_right_scagnostics():
-    global right_view
     while right_view == False:
         time.sleep(0.100)
     right_scags = {"Outlying": diff2[0], "Skewed": diff2[1], "Clumpy": diff2[2], "Sparse": diff2[3],
@@ -429,6 +456,8 @@ def return_right_scagnostics():
 
 @app.route('/get-current-scagnostics', methods=['GET', 'POST'])
 def return_current_scagnostics():
+    while current_scag == False:
+        time.sleep(0.100)
     right_scags = {"Outlying": current_view_list[0], "Skewed": current_view_list[1], "Clumpy": current_view_list[2],
                    "Sparse": current_view_list[3], "Striated": current_view_list[4], "Convex": current_view_list[5],
                    "Skinny": current_view_list[6], "Stringy": current_view_list[7], "Monotonic": current_view_list[8]}
@@ -436,5 +465,5 @@ def return_current_scagnostics():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
-    #app.run()
+    #app.run(host='0.0.0.0', port='5000')
+    app.run()

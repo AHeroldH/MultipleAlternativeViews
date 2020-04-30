@@ -9,6 +9,10 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="d3.v4" level="application" />
     <orderEntry type="library" name="d3-scale-chromatic.v1" level="application" />
+    <orderEntry type="library" name="d3-drag.v1" level="application" />
+    <orderEntry type="library" name="d3-dispatch.v1" level="application" />
+    <orderEntry type="library" name="d3-selection.v1" level="application" />
+    <orderEntry type="library" name="d3.v5" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />

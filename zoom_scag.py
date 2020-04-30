@@ -7,7 +7,7 @@ path = '.'
 df = pd.read_csv('movie-data.csv')  # "world_wide_gross_income", "avg_vote", "votes", "reviews_from_critics", "country",
 # "duration", "genre", "year"
 x = [1.0, 9.0]
-y = [0.0, 1346913161.0]
+y = [0.0, 1515047671.0]
 xRange = x[1] - x[0]
 yRange = y[1] - y[0]
 
@@ -48,19 +48,19 @@ def compute_scags(zoom_level):
         x_end = x[0] + (xRange - (xRange / scale) + 0.1)
         y_end = y[0] + (yRange - (yRange / scale) + 0.1)
         xspacing = 0.5
-        yspacing = round(y[1]/(5829*4))
+        yspacing = round(y[1]/(3689*4))
     elif zoom_level == 2:
         scale = 4
         x_end = x[0] + (xRange - (xRange / scale) + 0.1)
         y_end = y[0] + (yRange - (yRange / scale) + 0.1)
         xspacing = 0.25
-        yspacing = round(y[1] / (5829*8))
+        yspacing = round(y[1] / (3689*8))
     elif zoom_level == 3:
         scale = 8
         x_end = x[0] + (xRange - (xRange / scale) + 0.1)
         y_end = y[0] + (yRange - (yRange / scale) + 0.1)
         xspacing = 0.13
-        yspacing = round(y[1] / (5829 * 16))
+        yspacing = round(y[1] / (3689 * 16))
 
     for x_entry in np.arange(x_start, x_end, xspacing):
         for y_entry in np.arange(y_start, y_end, yspacing):
@@ -69,7 +69,7 @@ def compute_scags(zoom_level):
                 (df["rlwide_gross_income"] >= y_entry) & (df["rlwide_gross_income"] <=
                                                           (y_entry + yRange / scale))]
 
-            if data_in_view["avg_vote"].size <= 30 or data_in_view["rlwide_gross_income"].size <= 30:
+            if data_in_view["avg_vote"].size <= 50 or data_in_view["rlwide_gross_income"].size <= 50:
                 continue
 
             view_scags = scagnostics(data_in_view["avg_vote"], data_in_view["rlwide_gross_income"])
@@ -102,4 +102,4 @@ def compute_scags(zoom_level):
 
 
 if __name__ == '__main__':
-    compute_scags(2)
+    compute_scags(3)
