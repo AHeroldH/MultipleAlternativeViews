@@ -62,7 +62,7 @@
                             .append("svg")
                             .attr("id", "legend")
                             .attr("height", 250)
-                            .attr("transform", "translate(" + (screen.availWidth*0.32) + "," + -(screen.availHeight*0.1) +")");
+                            .attr("transform", "translate(" + (mainWidth*1.1) + "," + -(mainHeight*0.25) +")");
 
             var scags = ["Outlying", "Skewed", "Clumpy", "Sparse", "Striated", "Convex", "Skinny", "Stringy",
                     "Monotonic"];
@@ -96,9 +96,9 @@
 
             //Read the data
 
-            //d3.csv("http://127.0.0.1:5000/get-data", function(data) {
+            d3.csv("http://127.0.0.1:5000/get-data", function(data) {
 
-            d3.csv("https://multiplealternativeviews.azurewebsites.net/get-data", function(data) {
+            //d3.csv("https://multiplealternativeviews.azurewebsites.net/get-data", function(data) {
 
                 //d3.request('http://127.0.0.1:5000/get-scags').get();
 
@@ -389,7 +389,7 @@
                             .attr("id", "currentBar")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                            .attr("transform", "translate(" + (screen.availWidth*0.05) + "," + -(screen.availHeight*0.37) +")")
+                            .attr("transform", "translate(" + (mainWidth*0.15) + "," + -(mainHeight*0.92) +")")
                         .append("g")
                             .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
 
@@ -404,7 +404,7 @@
                             .attr("id", viewid.substring(1)+"Bar")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                            .attr("transform", "translate(" + (screen.availWidth*0.16) + "," + -(screen.availHeight*0.18) +")")
+                            .attr("transform", "translate(" + (mainWidth*0.54) + "," + -(mainHeight*0.45) +")")
                         .append("g")
                             .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
 
@@ -417,7 +417,7 @@
                             .attr("id", viewid.substring(1)+"Bar")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                            .attr("transform", "translate(" + (screen.availWidth*0.58) + "," + -(screen.availHeight*0.7) +")")
+                            .attr("transform", "translate(" + (mainWidth*1.93) + "," + -(mainHeight*1.75) +")")
                         .append("g")
                             .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
 
@@ -474,26 +474,25 @@
                     var newView;
 
                     if(viewid === "#left"){
-                        //barDatapath = 'http://127.0.0.1:5000/get-left-scagnostics';
-                        barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-left-scagnostics';
+                        barDatapath = 'http://127.0.0.1:5000/get-left-scagnostics';
+                        //barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-left-scagnostics';
 
                         newView = d3.select(viewid)
                             .append("svg")
                             .attr("id", viewid.substring(1)+"View")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right)*0.58)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.55)
-                            .attr("transform", "translate(" + (screen.availWidth*0.2) + ")")
-
+                            .attr("transform", "translate(" + ((screen.availWidth/2)-(mainWidth)) + ")")
                     }else if(viewid === "#right"){
-                         //barDatapath = 'http://127.0.0.1:5000/get-right-scagnostics';
-                         barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-right-scagnostics';
+                         barDatapath = 'http://127.0.0.1:5000/get-right-scagnostics';
+                         //barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-right-scagnostics';
 
                          newView = d3.select(viewid)
                             .append("svg")
                             .attr("id", viewid.substring(1)+"View")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right)*0.58)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.55)
-                            .attr("transform", "translate(" + (screen.availWidth*0.62)+ "," + -(screen.availHeight*0.52) +")")
+                            .attr("transform", "translate(" + ((screen.availWidth/2)+(mainWidth*0.4)) + "," + -(mainHeight*1.3) +")")
                     }
 
                     dispatchScag.call("updateBarchart", this, barDatapath, viewid);
@@ -642,9 +641,9 @@
                     var newXRange = "[" + zoomX.domain().toString() + "]";
                     var newYRange = "[" + zoomY.domain().toString() + "]";
 
-                    //d3.request("http://127.0.0.1:5000/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
+                    d3.request("http://127.0.0.1:5000/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
 
-                    d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
+                    //d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
 
                     // update axes with these new boundaries
                     xAxis.call(d3.axisBottom(zoomX));
@@ -656,15 +655,15 @@
                         .attr('cx', function(d) {return zoomX(d.avg_vote)})
                         .attr('cy', function(d) {return zoomY(d.rlwide_gross_income)});
 
-                    {# dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
+                    dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
                         dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
                             dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this)))); #}
+                                dispatchOverview.call("updateOverview", this))));
 
-                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
+                    {# dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
                         dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right",
                             dispatchScag.call("updateBarchart", this, "https://multiplealternativeviews.azurewebsites.net/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this))));
+                                dispatchOverview.call("updateOverview", this)))); #}
                 }
 
                 function zoomed() {
@@ -690,20 +689,20 @@
                     var newXRange = "[" + zoomX.domain().toString() + "]";
                     var newYRange = "[" + zoomY.domain().toString() + "]";
 
-                    //d3.request("http://127.0.0.1:5000/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
+                    d3.request("http://127.0.0.1:5000/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
 
-                    d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
+                    //d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
 
-                    {# dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
+                    dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
                         dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
                             dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this)))); #}
+                                dispatchOverview.call("updateOverview", this))));
 
 
-                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
+                    {# dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
                         dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right",
                             dispatchScag.call("updateBarchart", this, "https://multiplealternativeviews.azurewebsites.net/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this))));
+                                dispatchOverview.call("updateOverview", this)))); #}
 
                 }
 
