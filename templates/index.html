@@ -96,9 +96,9 @@
 
             //Read the data
 
-            d3.csv("http://127.0.0.1:5000/get-data", function(data) {
+            //d3.csv("http://127.0.0.1:5000/get-data", function(data) {
 
-            //d3.csv("https://multiplealternativeviews.azurewebsites.net/get-data", function(data) {
+            d3.csv("https://multiplealternativeviews.azurewebsites.net/get-data", function(data) {
 
                 //d3.request('http://127.0.0.1:5000/get-scags').get();
 
@@ -474,8 +474,8 @@
                     var newView;
 
                     if(viewid === "#left"){
-                        barDatapath = 'http://127.0.0.1:5000/get-left-scagnostics';
-                        //barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-left-scagnostics';
+                        //barDatapath = 'http://127.0.0.1:5000/get-left-scagnostics';
+                        barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-left-scagnostics';
 
                         newView = d3.select(viewid)
                             .append("svg")
@@ -484,8 +484,8 @@
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.55)
                             .attr("transform", "translate(" + ((screen.availWidth/2)-(mainWidth)) + ")")
                     }else if(viewid === "#right"){
-                         barDatapath = 'http://127.0.0.1:5000/get-right-scagnostics';
-                         //barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-right-scagnostics';
+                         //barDatapath = 'http://127.0.0.1:5000/get-right-scagnostics';
+                         barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-right-scagnostics';
 
                          newView = d3.select(viewid)
                             .append("svg")
@@ -641,9 +641,9 @@
                     var newXRange = "[" + zoomX.domain().toString() + "]";
                     var newYRange = "[" + zoomY.domain().toString() + "]";
 
-                    d3.request("http://127.0.0.1:5000/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
+                    //d3.request("http://127.0.0.1:5000/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
 
-                    //d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
+                    d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
 
                     // update axes with these new boundaries
                     xAxis.call(d3.axisBottom(zoomX));
@@ -655,15 +655,15 @@
                         .attr('cx', function(d) {return zoomX(d.avg_vote)})
                         .attr('cy', function(d) {return zoomY(d.rlwide_gross_income)});
 
-                    dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
+                    {# dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
                         dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
                             dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this))));
+                                dispatchOverview.call("updateOverview", this)))); #}
 
-                    {# dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
+                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
                         dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right",
                             dispatchScag.call("updateBarchart", this, "https://multiplealternativeviews.azurewebsites.net/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this)))); #}
+                                dispatchOverview.call("updateOverview", this))));
                 }
 
                 function zoomed() {
@@ -689,20 +689,20 @@
                     var newXRange = "[" + zoomX.domain().toString() + "]";
                     var newYRange = "[" + zoomY.domain().toString() + "]";
 
-                    d3.request("http://127.0.0.1:5000/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
+                    //d3.request("http://127.0.0.1:5000/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
 
-                    //d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
+                    d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
 
-                    dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
+                    {# dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
                         dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
                             dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this))));
+                                dispatchOverview.call("updateOverview", this)))); #}
 
 
-                    {# dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
+                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
                         dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right",
                             dispatchScag.call("updateBarchart", this, "https://multiplealternativeviews.azurewebsites.net/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this)))); #}
+                                dispatchOverview.call("updateOverview", this))));
 
                 }
 

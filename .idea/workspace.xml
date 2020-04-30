@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ca92a679-cce0-450f-9d11-b70eee95b29d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +198,7 @@
       <workItem from="1588158004824" duration="33345000" />
       <workItem from="1588260214072" duration="182000" />
       <workItem from="1588260500668" duration="187000" />
-      <workItem from="1588260720414" duration="4877000" />
+      <workItem from="1588260720414" duration="5089000" />
     </task>
     <task id="LOCAL-00001" summary="removed torch from requirements">
       <created>1587912192093</created>
@@ -384,7 +382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588264754487</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Accommodated to the screen size again">
+      <created>1588267910732</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1588267910732</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -413,7 +418,8 @@
     <MESSAGE value="More time delay for overview again on right view + debounce on the zoom update, so the pan interactions become a bit more fluid" />
     <MESSAGE value="...now the server can run" />
     <MESSAGE value="Accommodated to the screen size" />
-    <option name="LAST_COMMIT_MESSAGE" value="Accommodated to the screen size" />
+    <MESSAGE value="Accommodated to the screen size again" />
+    <option name="LAST_COMMIT_MESSAGE" value="Accommodated to the screen size again" />
   </component>
   <component name="WindowStateProjectService">
     <state x="320" y="126" key="#Inspections" timestamp="1587894070271">
@@ -430,10 +436,10 @@
       <screen x="0" y="23" width="1440" height="808" />
     </state>
     <state x="458" y="181" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1440.808@0.23.1440.808" timestamp="1588194945384" />
-    <state x="302" y="7" width="839" height="715" key="CommitChangelistDialog2" timestamp="1588264754340">
+    <state x="302" y="7" width="839" height="715" key="CommitChangelistDialog2" timestamp="1588267910617">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="302" y="7" width="839" height="715" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1588264754340" />
+    <state x="302" y="7" width="839" height="715" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1588267910617" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.808@0.23.1440.808" timestamp="1587988629491" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.811@0.23.1440.811" timestamp="1588087536490" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.812@0.23.1440.812" timestamp="1588108500556" />
@@ -505,10 +511,10 @@
       <screen x="0" y="23" width="1440" height="808" />
     </state>
     <state width="500" height="445" key="SwitcherDM/0.23.1440.808@0.23.1440.808" timestamp="1587894207684" />
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1588264756183">
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1588267912131">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1588264756183" />
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1588267912131" />
     <state x="320" y="167" key="Vcs.Push.Dialog.v2/0.23.1440.808@0.23.1440.808" timestamp="1587988631928" />
     <state x="320" y="168" key="Vcs.Push.Dialog.v2/0.23.1440.811@0.23.1440.811" timestamp="1588087538658" />
     <state x="378" y="49" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1587543874420">
