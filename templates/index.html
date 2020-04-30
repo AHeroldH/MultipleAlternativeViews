@@ -7,26 +7,6 @@
 <!-- Create a div where the circle will take place -->
 
 <style>
-    .alternatives {
-        position: absolute;
-        top: 420px;
-    }
-    #left {
-        left: 220px;
-    }
-    #leftView {
-        border: 1px solid #008000;
-    }
-    #center {
-        left: 590px;
-    }
-    #right {
-        left: 840px;
-    }
-    #rightView {
-        border: 1px solid #FF0000;
-    }
-
     .tooltip {
         position: absolute;
         text-align: left;
@@ -43,6 +23,7 @@
     .explanation {
         position: absolute;
         top: 100px;
+        left: 40px;
         line-height: 1.6;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 20px;
@@ -81,7 +62,7 @@
                             .append("svg")
                             .attr("id", "legend")
                             .attr("height", 250)
-                            .attr("transform", "translate(470, -85)");
+                            .attr("transform", "translate(" + (screen.availWidth*0.32) + "," + -(screen.availHeight*0.1) +")");
 
             var scags = ["Outlying", "Skewed", "Clumpy", "Sparse", "Striated", "Convex", "Skinny", "Stringy",
                     "Monotonic"];
@@ -309,7 +290,8 @@
                         .append("svg")
                         .attr("id", "centerView")
                         .attr("width", (mainWidth + mainMargin.left + mainMargin.right)*0.6)
-                        .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.6);
+                        .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.6)
+                        .attr("transform", "translate(" + ((screen.availWidth/2)-(mainWidth/4 + 20)) + "," + -(mainHeight*0.625) +")")
 
                     var xOverview = d3.scaleLinear()
                         .domain([1, 9])
@@ -378,7 +360,7 @@
        			            .style("stroke", "green")
        			            .style("fill", "none")
        			            .style("stroke-width", 1);
-                    }, zoomNo*3000)
+                    }, zoomNo*3500);
 
                     setTimeout(() => {
                         var rightView = newOverview.append("rect")
@@ -390,7 +372,8 @@
        			            .style("stroke", "red")
        			            .style("fill", "none")
        			            .style("stroke-width", 1);
-                    }, zoomNo*4500)
+                    }, zoomNo*5000);
+
                 });
 
                 dispatchScag.on("updateBarchart", function(datapath, viewid, callback) {
@@ -406,15 +389,14 @@
                             .attr("id", "currentBar")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                            .attr("transform", "translate("+ ((mainWidth + mainMargin.left + mainMargin.right)*0.15) +
-                                ", " + -((mainHeight + mainMargin.top + mainMargin.bottom) * 0.85) + ")")
+                            .attr("transform", "translate(" + (screen.availWidth*0.05) + "," + -(screen.availHeight*0.37) +")")
                         .append("g")
                             .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
 
                         viewid = "#dataviz_axisZoom";
 
                         radius = Math.min(mainWidth * 0.35, (mainHeight * 0.35)) / 2 - 30;
-                    }else{
+                    }else if (viewid === "#left"){
                         d3.select(viewid).select(viewid+"Bar").remove();
 
                         currentDonut = d3.select(viewid)
@@ -422,8 +404,20 @@
                             .attr("id", viewid.substring(1)+"Bar")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                            .attr("transform", "translate("+ ((mainWidth + mainMargin.left + mainMargin.right) * 0.59) +
-                                ", " + -((mainHeight + mainMargin.top + mainMargin.bottom) * 0.42) + ")")
+                            .attr("transform", "translate(" + (screen.availWidth*0.16) + "," + -(screen.availHeight*0.18) +")")
+                        .append("g")
+                            .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
+
+                        radius = Math.min(mainWidth * 0.3, (mainHeight * 0.3)) / 2 - 30;
+                    }else if (viewid === "#right"){
+                        d3.select(viewid).select(viewid+"Bar").remove();
+
+                        currentDonut = d3.select(viewid)
+                        .append("svg")
+                            .attr("id", viewid.substring(1)+"Bar")
+                            .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
+                            .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
+                            .attr("transform", "translate(" + (screen.availWidth*0.58) + "," + -(screen.availHeight*0.7) +")")
                         .append("g")
                             .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
 
@@ -477,30 +471,34 @@
                 dispatch.on("updateAlternatives", function(datapath, viewid, callback){
 
                     var  barDatapath;
-
-                    {#if(viewid === "#left"){
-                        barDatapath = 'http://127.0.0.1:5000/get-left-scagnostics';
-
-                    }else if(viewid === "#right"){
-                         barDatapath = 'http://127.0.0.1:5000/get-right-scagnostics';
-                    }#}
+                    var newView;
 
                     if(viewid === "#left"){
+                        //barDatapath = 'http://127.0.0.1:5000/get-left-scagnostics';
                         barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-left-scagnostics';
 
+                        newView = d3.select(viewid)
+                            .append("svg")
+                            .attr("id", viewid.substring(1)+"View")
+                            .attr("width", (mainWidth + mainMargin.left + mainMargin.right)*0.58)
+                            .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.55)
+                            .attr("transform", "translate(" + (screen.availWidth*0.2) + ")")
+
                     }else if(viewid === "#right"){
+                         //barDatapath = 'http://127.0.0.1:5000/get-right-scagnostics';
                          barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-right-scagnostics';
+
+                         newView = d3.select(viewid)
+                            .append("svg")
+                            .attr("id", viewid.substring(1)+"View")
+                            .attr("width", (mainWidth + mainMargin.left + mainMargin.right)*0.58)
+                            .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.55)
+                            .attr("transform", "translate(" + (screen.availWidth*0.62)+ "," + -(screen.availHeight*0.52) +")")
                     }
 
                     dispatchScag.call("updateBarchart", this, barDatapath, viewid);
 
                     d3.select(viewid).select(viewid+"View").remove();
-
-                    var newView = d3.select(viewid)
-                        .append("svg")
-                        .attr("id", viewid.substring(1)+"View")
-                        .attr("width", (mainWidth + mainMargin.left + mainMargin.right)*0.58)
-                        .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.55);
 
                     d3.csv(datapath, function (newData) {
 
@@ -550,9 +548,13 @@
                         if(viewid === "#left"){
                             leftXAxisRange = xAxisRange;
                             leftYAxisRange = yAxisRange;
+
+                            leftReady = true
                         }else if(viewid === "#right"){
                             rightXAxisRange = xAxisRange;
                             rightYAxisRange = yAxisRange;
+
+                            rightReady = true
                         }
 
 
@@ -725,8 +727,7 @@
                 .append("svg")
                 .attr("id", "leftView")
                 .attr("width", ((width + margin.left + margin.right)*0.55 + 10))
-                .attr("height", ((height + margin.top + margin.bottom)*0.55 + 10))
-                .attr("transform", "translate("+ (screen.availWidth/2-((mainWidth*0.6) + 40)) + ")");
+                .attr("height", ((height + margin.top + margin.bottom)*0.55 + 10));
 
         </script>
     </div>
