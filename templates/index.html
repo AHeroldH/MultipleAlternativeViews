@@ -7,6 +7,15 @@
 <!-- Create a div where the circle will take place -->
 
 <style>
+
+    #leftView {
+        border: 1px solid #008000;
+    }
+
+    #rightView {
+        border: 1px solid #FF0000;
+    }
+
     .tooltip {
         position: absolute;
         text-align: left;
@@ -62,7 +71,7 @@
                             .append("svg")
                             .attr("id", "legend")
                             .attr("height", 250)
-                            .attr("transform", "translate(" + (mainWidth*1.1) + "," + -(mainHeight*0.25) +")");
+                            .attr("transform", "translate(" + (screen.availWidth*0.32) + "," + -(mainHeight*0.25) +")");
 
             var scags = ["Outlying", "Skewed", "Clumpy", "Sparse", "Striated", "Convex", "Skinny", "Stringy",
                     "Monotonic"];
@@ -389,7 +398,7 @@
                             .attr("id", "currentBar")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                            .attr("transform", "translate(" + (mainWidth*0.15) + "," + -(mainHeight*0.92) +")")
+                            .attr("transform", "translate(" + (screen.availWidth*0.05) + "," + -(mainHeight*0.92) +")")
                         .append("g")
                             .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
 
@@ -404,7 +413,7 @@
                             .attr("id", viewid.substring(1)+"Bar")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                            .attr("transform", "translate(" + (mainWidth*0.54) + "," + -(mainHeight*0.45) +")")
+                            .attr("transform", "translate(" + (screen.availWidth*0.16) + "," + -(mainHeight*0.45) +")")
                         .append("g")
                             .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
 
@@ -417,7 +426,7 @@
                             .attr("id", viewid.substring(1)+"Bar")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                            .attr("transform", "translate(" + (mainWidth*1.93) + "," + -(mainHeight*1.75) +")")
+                            .attr("transform", "translate(" + (screen.availWidth*0.58) + "," + -(mainHeight*1.75) +")")
                         .append("g")
                             .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
 
@@ -484,7 +493,7 @@
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom)*0.55)
                             .attr("transform", "translate(" + ((screen.availWidth/2)-(mainWidth)) + ")")
                     }else if(viewid === "#right"){
-                         //barDatapath = 'http://127.0.0.1:5000/get-right-scagnostics';
+                        //barDatapath = 'http://127.0.0.1:5000/get-right-scagnostics';
                          barDatapath = 'https://multiplealternativeviews.azurewebsites.net/get-right-scagnostics';
 
                          newView = d3.select(viewid)
