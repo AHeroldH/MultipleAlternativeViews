@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ca92a679-cce0-450f-9d11-b70eee95b29d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first_zoom_scagnostics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/first_zoom_scagnostics.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second_zoom_scagnostics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/second_zoom_scagnostics.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third_zoom_scagnostics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/third_zoom_scagnostics.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoom_scag.py" beforeDir="false" afterPath="$PROJECT_DIR$/zoom_scag.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +200,7 @@
       <workItem from="1588260214072" duration="182000" />
       <workItem from="1588260500668" duration="187000" />
       <workItem from="1588260720414" duration="5683000" />
-      <workItem from="1588315515801" duration="8102000" />
+      <workItem from="1588315515801" duration="8511000" />
     </task>
     <task id="LOCAL-00001" summary="removed torch from requirements">
       <created>1587912192093</created>
@@ -424,7 +419,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588321532156</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="New scagnostics for all zoom levels with at least 350 points">
+      <created>1588357292121</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1588357292122</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,7 +434,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="removed vtk from requirements" />
     <MESSAGE value="edited port and host" />
     <MESSAGE value="added port to pipeline" />
     <MESSAGE value="added shebang and edited port in app" />
@@ -457,7 +458,8 @@
     <MESSAGE value="Hopefully last accommodated to the screen size" />
     <MESSAGE value="we try again..!" />
     <MESSAGE value="last time..!" />
-    <option name="LAST_COMMIT_MESSAGE" value="last time..!" />
+    <MESSAGE value="New scagnostics for all zoom levels with at least 350 points" />
+    <option name="LAST_COMMIT_MESSAGE" value="New scagnostics for all zoom levels with at least 350 points" />
   </component>
   <component name="WindowStateProjectService">
     <state x="320" y="126" key="#Inspections" timestamp="1587894070271">
@@ -474,10 +476,10 @@
       <screen x="0" y="23" width="1440" height="808" />
     </state>
     <state x="458" y="181" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1440.808@0.23.1440.808" timestamp="1588194945384" />
-    <state x="302" y="7" width="839" height="715" key="CommitChangelistDialog2" timestamp="1588321532032">
+    <state x="302" y="7" width="839" height="715" key="CommitChangelistDialog2" timestamp="1588357291583">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="302" y="7" width="839" height="715" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1588321532032" />
+    <state x="302" y="7" width="839" height="715" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1588357291583" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.808@0.23.1440.808" timestamp="1587988629491" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.811@0.23.1440.811" timestamp="1588087536490" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.812@0.23.1440.812" timestamp="1588108500556" />
@@ -549,10 +551,10 @@
       <screen x="0" y="23" width="1440" height="808" />
     </state>
     <state width="500" height="445" key="SwitcherDM/0.23.1440.808@0.23.1440.808" timestamp="1587894207684" />
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1588321533252">
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1588357293327">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1588321533252" />
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1588357293327" />
     <state x="320" y="167" key="Vcs.Push.Dialog.v2/0.23.1440.808@0.23.1440.808" timestamp="1587988631928" />
     <state x="320" y="168" key="Vcs.Push.Dialog.v2/0.23.1440.811@0.23.1440.811" timestamp="1588087538658" />
     <state x="378" y="49" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1587543874420">
