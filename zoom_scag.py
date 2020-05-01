@@ -69,7 +69,7 @@ def compute_scags(zoom_level):
                 (df["rlwide_gross_income"] >= y_entry) & (df["rlwide_gross_income"] <=
                                                           (y_entry + yRange / scale))]
 
-            if data_in_view["avg_vote"].size <= 50 or data_in_view["rlwide_gross_income"].size <= 50:
+            if data_in_view["avg_vote"].size <= 350 or data_in_view["rlwide_gross_income"].size <= 350:
                 continue
 
             view_scags = scagnostics(data_in_view["avg_vote"], data_in_view["rlwide_gross_income"])

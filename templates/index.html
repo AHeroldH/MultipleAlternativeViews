@@ -358,7 +358,7 @@
                     focusY = zoomY.domain();
 
                     var focusRegion = newOverview.append("rect")
-                        .attr("transform", "translate(73, " + zoomNo*1.5 +")")
+                        .attr("transform", "translate(73, " + 5 +")")
        			        .attr("x", xOverview(focusX[0]))
        			        .attr("y", yOverview(focusY[1]))
        			        .attr("height", -(yOverview(focusY[1])-yOverview(focusY[0])))
@@ -369,7 +369,7 @@
 
                     setTimeout(() => {
                         var leftView = newOverview.append("rect")
-                            .attr("transform", "translate(73," + zoomNo*1.5 +")")
+                            .attr("transform", "translate(73," + 5 +")")
                             .attr("x", xOverview(leftXAxisRange[0]))
        			            .attr("y", yOverview(leftYAxisRange[1]))
        			            .attr("height", -(yOverview(leftYAxisRange[1])-yOverview(leftYAxisRange[0])))
@@ -381,7 +381,7 @@
 
                     setTimeout(() => {
                         var rightView = newOverview.append("rect")
-       			            .attr("transform", "translate(73," + zoomNo*1.5 +")")
+       			            .attr("transform", "translate(73," + 5 +")")
                             .attr("x", xOverview(rightXAxisRange[0]))
        			            .attr("y", yOverview(rightYAxisRange[1]))
        			            .attr("height", -(yOverview(rightYAxisRange[1])-yOverview(rightYAxisRange[0])))
