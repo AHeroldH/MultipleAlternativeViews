@@ -400,7 +400,7 @@
        			            .style("stroke", "green")
        			            .style("fill", "none")
        			            .style("stroke-width", 1);
-                    }, zoomNo*400);
+                    }, zoomNo*1000);
 
                     setTimeout(() => {
                         var rightView = newOverview.append("rect")
@@ -412,7 +412,7 @@
        			            .style("stroke", "red")
        			            .style("fill", "none")
        			            .style("stroke-width", 1);
-                    }, zoomNo*500);
+                    }, zoomNo*1000);
 
                 });
 
@@ -429,7 +429,7 @@
                             .attr("id", "currentBar")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                            .attr("transform", "translate(" + ((screen.availWidth*0.5) + mainWidth*0.4) + "," + -(mainHeight*3.75) +")")
+                            .attr("transform", "translate(" + ((screen.availWidth*0.5) + mainWidth*0.15) + "," + -(mainHeight*3.75) +")")
                         .append("g")
                             .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
 
