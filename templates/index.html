@@ -53,7 +53,8 @@
                 .append("div")
                 .attr("class", "explanation");
 
-            text.html("To zoom in: Double click/tap <br> To zoom out: Shift + double click/tap");
+            text.html("To zoom in: Double click/tap <br> To zoom out: Shift + double click/tap" +
+                "<br> You cannot zoom in more than three times");
 
             // append the SVG object to the body of the page
             var SVG = d3.select("#dataviz_axisZoom")
@@ -68,11 +69,11 @@
                             .attr("id", "currentBar");
 
             var leftBar = d3.select("body")
-                .append("svg")
+                    .append("svg")
                     .attr("id", "leftBar");
 
             var rightBar = d3.select("body")
-                .append("svg")
+                    .append("svg")
                     .attr("id", "rightBar");
 
             var scagLegend = d3.select("body")
@@ -168,6 +169,14 @@
                             .select("#currentBar")
                             .style("opacity", 0);
 
+                var leftScag = d3.select("body")
+                            .select("#leftBar")
+                            .style("opacity", 0);
+
+                var rightScag = d3.select("body")
+                            .select("#rightBar")
+                            .style("opacity", 0);
+
                 var leftAlt = d3.select("body").select("#left");
 
                 leftAlt.on("mousedown", function () {
@@ -205,6 +214,14 @@
                                 .duration(50)
                                 .style("opacity", 0);
 
+                            leftScag.transition()
+                                .duration(50)
+                                .style("opacity", 0);
+
+                            rightScag.transition()
+                                .duration(50)
+                                .style("opacity", 0);
+
                             legend.transition()
                                 .duration(50)
                                 .style("opacity", 0);
@@ -216,6 +233,12 @@
                     }else {
                         ++zoomNo;
                         currentScag.transition()
+                                .style("opacity", 1);
+                        leftScag.transition()
+                                .duration(50)
+                                .style("opacity", 1);
+                        rightScag.transition()
+                                .duration(50)
                                 .style("opacity", 1);
                         legend.transition()
                             .duration(50)
@@ -377,7 +400,7 @@
        			            .style("stroke", "green")
        			            .style("fill", "none")
        			            .style("stroke-width", 1);
-                    }, zoomNo*1500);
+                    }, zoomNo*400);
 
                     setTimeout(() => {
                         var rightView = newOverview.append("rect")
@@ -389,7 +412,7 @@
        			            .style("stroke", "red")
        			            .style("fill", "none")
        			            .style("stroke-width", 1);
-                    }, zoomNo*3000);
+                    }, zoomNo*500);
 
                 });
 
@@ -421,7 +444,7 @@
                             .attr("id", viewid.substring(1)+"Bar")
                             .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                             .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                            .attr("transform", "translate(" + ((screen.availWidth/2)-(mainWidth*0.77)) + "," + -(mainHeight*2.65) +")")
+                            .attr("transform", "translate(" + ((screen.availWidth/2)-(mainWidth*0.48)) + "," + -(mainHeight*2.65) +")")
                         .append("g")
                             .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2 + ")");
 
@@ -672,15 +695,16 @@
                         .attr('cx', function(d) {return zoomX(d.avg_vote)})
                         .attr('cy', function(d) {return zoomY(d.rlwide_gross_income)});
 
-                    {# dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
-                        dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
-                            dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this)))); #}
+                    {# dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left");
+                    dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right");
+                    dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics",
+                        "#currentBar");
+                    dispatchOverview.call("updateOverview", this); #}
 
-                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
-                        dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right",
-                            dispatchScag.call("updateBarchart", this, "https://multiplealternativeviews.azurewebsites.net/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this))));
+                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left");
+                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right");
+                    dispatchScag.call("updateBarchart", this, "https://multiplealternativeviews.azurewebsites.net/get-current-scagnostics", "#currentBar");
+                    dispatchOverview.call("updateOverview", this);
                 }
 
                 function zoomed() {
@@ -699,7 +723,7 @@
                         .attr('cx', function(d) {return zoomX(d.avg_vote)})
                         .attr('cy', function(d) {return zoomY(d.rlwide_gross_income)});
 
-                    debounce(zoomUpdate(), 2000)
+                    zoomUpdate();
                 }
 
                 function zoomUpdate() {
@@ -710,16 +734,17 @@
 
                     d3.request("https://multiplealternativeviews.azurewebsites.net/get-coords?x="+newXRange+"&y="+newYRange+"&zoomNo="+zoomNo).get();
 
-                    {# dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left",
-                        dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right",
-                            dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this)))); #}
+                    {# dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left");
+                    dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right");
+                    dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics",
+                        "#currentBar");
+                    dispatchOverview.call("updateOverview", this); #}
 
 
-                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left",
-                        dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right",
-                            dispatchScag.call("updateBarchart", this, "https://multiplealternativeviews.azurewebsites.net/get-current-scagnostics", "#currentBar",
-                                dispatchOverview.call("updateOverview", this))));
+                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left");
+                    dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right");
+                    dispatchScag.call("updateBarchart", this, "https://multiplealternativeviews.azurewebsites.net/get-current-scagnostics", "#currentBar");
+                    dispatchOverview.call("updateOverview", this);
 
                 }
 

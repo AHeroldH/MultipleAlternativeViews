@@ -204,6 +204,15 @@ def set_left_view(comparable_views, current_view_list, key_list, val_list):
 
     left_view = False
 
+    space = 0
+
+    if no_of_zoom == 1:
+        space = 1.0
+    elif no_of_zoom == 2:
+        space = 0.75
+    else:
+        space = 0.5
+
     diff1 = 0
     for view, scags in comparable_views.items():
 
@@ -213,7 +222,7 @@ def set_left_view(comparable_views, current_view_list, key_list, val_list):
         window_x = ast.literal_eval(window[0])
         window_y = ast.literal_eval(window[1])
 
-        if (((x[0] - 1.5) <= window_x[0] <= (x[1] + 1.5)) and ((x[0] - 1.5) <= window_x[1] <= (x[1] + 1.5))):
+        if (((x[0] - space) <= window_x[0] <= (x[1] + space)) and ((x[0] - space) <= window_x[1] <= (x[1] + space))):
             continue
 
         view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
@@ -290,6 +299,14 @@ def set_right_view(comparable_views, current_view_list, key_list, val_list):
     heap = []
     three_best_diff2 = [0 for i in range(10)]
     view_list = [0 for i in range(10)]
+    space = 0
+
+    if no_of_zoom == 1:
+        space = 1.0
+    elif no_of_zoom == 2:
+        space = 0.75
+    else:
+        space = 0.5
 
     for view, scags in comparable_views.items():
 
@@ -297,9 +314,9 @@ def set_right_view(comparable_views, current_view_list, key_list, val_list):
         window_x = ast.literal_eval(window[0])
         window_y = ast.literal_eval(window[1])
 
-        if ((((left_view_x[0] - 1.5) <= window_x[0] <= (left_view_x[1] + 1.5)) and ((left_view_x[0] - 1.5) <= window_x[1] <=
-            (left_view_x[1] + 1.5)))) or (((x[0] - 1) <= window_x[0] <= (x[1] + 1)) and ((x[0]
-            - 1) <= window_x[1] <= (x[1] + 1))):
+        if ((((left_view_x[0] - space) <= window_x[0] <= (left_view_x[1] + space)) and ((left_view_x[0] - space) <= window_x[1] <=
+            (left_view_x[1] + space)))) or (((x[0] - space) <= window_x[0] <= (x[1] + space)) and ((x[0]
+            - space) <= window_x[1] <= (x[1] + space))):
             continue
 
         # view_diff = diff_of_lists(scags, current_view_list)
@@ -319,6 +336,7 @@ def set_right_view(comparable_views, current_view_list, key_list, val_list):
             view_list[heap.index(view_diff)] = view
 
     print(heap)
+    print(len(comparable_views))
 
     for ele in three_best_diff2:
         if ele == 0:
@@ -327,7 +345,7 @@ def set_right_view(comparable_views, current_view_list, key_list, val_list):
             diff_1_2 = distance.euclidean(np.asarray(ele), np.asarray(diff1_scags))
             diff2 = ele
 
-    if diff2 == 0:
+    if diff2 == 0 or len(heap) == 0:
         set_right_view(comparable_views, current_view_list, key_list, val_list)
 
     view = key_list[val_list.index(diff2)]
