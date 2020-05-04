@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<style>
+    .tooltip {
+        position: absolute;
+        text-align: left;
+        padding: .2rem;
+        background: #FFFFFF;
+        color: #313639;
+        border: 0.5px solid #313639;
+        border-radius: 4px;
+        pointer-events: none;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.75rem;
+    }
+
+    .explanation {
+        position: absolute;
+        top: 100px;
+        left: 40px;
+        line-height: 1.6;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+    }
+</style>
+
+<!-- Create a div where the circle will take place -->
+<div id="dataviz_axisZoom"></div>
+
+<script>
+
+    // set the dimensions and margins of the graph
+    var margin = {top: 10, right: 30, bottom: 30, left: 60},
+        width = 525 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    var text = d3.select("body")
+                .append("div")
+                .attr("class", "explanation");
+
+    text.html("To zoom in: Double click/tap or scroll <br> To zoom out: Shift + double click/tap or scroll");
+
+    // append the SVG object to the body of the page
+    var SVG = d3.select("#dataviz_axisZoom")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .attr("transform", "translate("+ (screen.availWidth/2-(520/2)) + ")");
+
+    //Read the data
+    d3.csv("http://127.0.0.1:5000/get-data", function(data) {
+
+    //d3.csv("https://multiplealternativeviews.azurewebsites.net/get-data", function(data) {
+
+      var x = d3.scaleLinear()
+          .domain([1, 9])
+          .range([ 0, width]);
+
+      var xAxis = SVG.append("g")
+          .attr("transform", "translate(78,365)")
+          .call(d3.axisBottom(x));
+
+      // Add Y axis
+      var y = d3.scaleLinear()
+          .domain([0, 1515047671])
+          .range([ height, 0]);
+
+      var yAxis = SVG.append("g")
+          .attr("transform", "translate(78,5)")
+          .call(d3.axisLeft(y).tickFormat(function(d) { return '$' + d3.format(",")(d) }));
+
+      // Add a clipPath: everything out of this area won't be drawn.
+      var clip = SVG.append("defs").append("SVG:clipPath")
+          .attr("id", "clip")
+          .append("SVG:rect")
+          .attr("width", width )
+          .attr("height", height )
+          .attr("transform", "translate(78,5)")
+          .attr("x", 0)
+          .attr("y", 0);
+
+      // Create the scatter variable: where both the circles and the brush take place
+      var scatter = SVG.append('g')
+        .attr("clip-path", "url(#clip)");
+
+      var div = d3.select("body").append("div")
+                    .attr("class", "tooltip")
+                    .style("opacity", 0);
+
+      // Add circles
+      scatter
+        .selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+          .attr("transform", "translate(78,5)")
+          .attr("cx", function (d) { return x(d.avg_vote); } )
+          .attr("cy", function (d) { return y(d.rlwide_gross_income); } )
+          .attr("r", 4)
+          .style("fill", "#61a3a9")
+          .style("opacity", 0.5)
+          .on('mouseover', function (d, i) {
+              d3.select(this).transition()
+                  .duration('50')
+                  .style("fill", "#eb8c34")
+                  .style("opacity", 1);
+
+              div.transition()
+                  .duration(50)
+                  .style("opacity", 1);
+
+              div.html("Average Vote: " + d.avg_vote + "<br> Number of User Votes: " + d.votes +
+                  "<br> World Wide Gross Income: $" + d.rlwide_gross_income +
+                  "<br> Number of Reviews From Critics: " + d.reviews_from_critics + "<br> Duration: " +
+                  d.duration + " min. <br> Genre(s): " + d.genre + "<br> Produced in: " +
+                  d.country + "<br>  Year of Production: " + d.year)
+                  .style("left", (d3.event.pageX + 10) + "px")
+                  .style("top", (d3.event.pageY - 15) + "px");
+          })
+          .on('mouseout', function (d, i) {
+              d3.select(this).transition()
+                  .duration('50')
+                  .style("fill", "#61a3a9")
+                  .style("opacity", 0.5);
+
+              div.transition()
+                  .duration(50)
+                  .style("opacity", 0);
+          });
+
+      // Set the zoom and Pan features: how much you can zoom, on which part, and what to do when there is a zoom
+      var zoom = d3.zoom()
+          .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
+          .extent([[0, 0], [width, height]])
+          .on("zoom", updateChart);
+
+      // This add an invisible rect on top of the chart area. This rect can recover pointer events: necessary to understand when the user zoom
+      SVG.append("rect")
+          .attr("width", width)
+          .attr("height", height)
+          .style("fill", "none")
+          .style("pointer-events", "all")
+          .attr('transform', 'translate(' + (margin.left + 18) + ',' + (margin.top-5) + ')')
+          .call(zoom);
+      // now the user can zoom and it will trigger the function called updateChart
+
+      // A function that updates the chart when the user zoom and thus new boundaries are available
+      function updateChart() {
+
+        // recover the new scale
+        var newX = d3.event.transform.rescaleX(x);
+        var newY = d3.event.transform.rescaleY(y);
+
+        // update axes with these new boundaries
+        xAxis.call(d3.axisBottom(newX))
+        yAxis.call(d3.axisLeft(newY))
+
+        // update circle position
+        scatter
+          .selectAll("circle")
+          .attr("cx", function (d) { return newX(d.avg_vote); } )
+          .attr("cy", function (d) { return newY(d.rlwide_gross_income); } );
+      }
+
+    })
+</script>

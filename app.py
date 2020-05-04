@@ -75,9 +75,16 @@ center_view = False
 right_view = False
 current_scag = False
 
-@app.route("/")
+
+@app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template('index.html')
+
+
+@app.route('/interactive-scatterplot')
+def interactive_scatterplot():
+    return render_template('interactive_scatterplot.html')
+
 
 def scagnostics(x, y):
     all_scags = {}
@@ -103,6 +110,19 @@ def scagnostics(x, y):
 @app.route('/get-data', methods=['GET', 'POST'])
 def return_data():
     return df.to_csv()
+
+
+@app.route('/log', methods=['GET', 'POST'])
+def log():
+    log_name = request.args['logName']
+    new_line = request.args['newLine']
+
+    with open('log_' + log_name + '.csv', 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([new_line])
+
+    return ""
+
 
 
 @app.route('/get-coords')
@@ -225,7 +245,7 @@ def set_left_view(comparable_views, current_view_list, key_list, val_list):
         if (((x[0] - space) <= window_x[0] <= (x[1] + space)) and ((x[0] - space) <= window_x[1] <= (x[1] + space))):
             continue
 
-        view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
+        view_diff = distance.sqeuclidean(np.asarray(scags), np.asarray(current_view_list))
 
         new_diff1 = max(diff1, view_diff)
 
@@ -266,7 +286,7 @@ def set_centre_view(comparable_views, current_view_list, key_list, val_list):
 
         # view_diff = diff_of_lists(scags, current_view_list)
 
-        view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
+        view_diff = distance.sqeuclidean(np.asarray(scags), np.asarray(current_view_list))
 
         if len(heap) < 10:
             heappush(heap, view_diff)
@@ -276,8 +296,8 @@ def set_centre_view(comparable_views, current_view_list, key_list, val_list):
             three_best_diff2.insert(heap.index(view_diff), scags)
 
     for ele in three_best_diff2:
-        if distance.euclidean(np.asarray(ele), np.asarray(diff1_scags)) > diff_1_2:
-            diff_1_2 = distance.euclidean(np.asarray(ele), np.asarray(diff1_scags))
+        if distance.sqeuclidean(np.asarray(ele), np.asarray(diff1_scags)) > diff_1_2:
+            diff_1_2 = distance.sqeuclidean(np.asarray(ele), np.asarray(diff1_scags))
             diff2 = ele
 
     view = key_list[val_list.index(diff2)]
@@ -321,7 +341,7 @@ def set_right_view(comparable_views, current_view_list, key_list, val_list):
 
         # view_diff = diff_of_lists(scags, current_view_list)
 
-        view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
+        view_diff = distance.sqeuclidean(np.asarray(scags), np.asarray(current_view_list))
 
         for ele in heap:
             if (ele-0.05) <= view_diff <= (ele+0.05):
@@ -342,7 +362,7 @@ def set_right_view(comparable_views, current_view_list, key_list, val_list):
         if ele == 0:
             continue
         if distance.euclidean(np.asarray(ele), np.asarray(diff1_scags)) > diff_1_2:
-            diff_1_2 = distance.euclidean(np.asarray(ele), np.asarray(diff1_scags))
+            diff_1_2 = distance.sqeuclidean(np.asarray(ele), np.asarray(diff1_scags))
             diff2 = ele
 
     if diff2 == 0 or len(heap) == 0:
@@ -483,5 +503,5 @@ def return_current_scagnostics():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
-    #app.run()
+    #app.run(host='0.0.0.0', port='5000')
+    app.run()
