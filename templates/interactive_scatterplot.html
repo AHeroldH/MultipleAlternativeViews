@@ -52,9 +52,9 @@
         .attr("transform", "translate("+ (screen.availWidth/2-(520/2)) + ")");
 
     //Read the data
-    d3.csv("http://127.0.0.1:5000/get-data", function(data) {
+    //d3.csv("http://127.0.0.1:5000/get-data", function(data) {
 
-    //d3.csv("https://multiplealternativeviews.azurewebsites.net/get-data", function(data) {
+    d3.csv("https://multiplealternativeviews.azurewebsites.net/get-data", function(data) {
 
       var x = d3.scaleLinear()
           .domain([1, 9])
