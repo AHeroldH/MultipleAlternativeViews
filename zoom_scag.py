@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 import rpy2.robjects as robjects
+import time
 
 path = '.'
 df = pd.read_csv('movie-data.csv')  # "world_wide_gross_income", "avg_vote", "votes", "reviews_from_critics", "country",
@@ -33,7 +34,7 @@ def scagnostics(x, y):
     return all_scags
 
 
-def compute_scags(zoom_level):
+def compute_scags(zoom_level, x_axis_scale, y_axis_scale):
     x_start = x[0]
     y_start = y[0]
     x_end = x[1]
@@ -62,8 +63,10 @@ def compute_scags(zoom_level):
         xspacing = 0.13
         yspacing = round(y[1] / (3689 * 16))
 
-    for x_entry in np.arange(x_start, x_end, xspacing):
-        for y_entry in np.arange(y_start, y_end, yspacing):
+    start_time = time.time()
+
+    for x_entry in np.arange(x_start, x_end, xspacing*x_axis_scale):
+        for y_entry in np.arange(y_start, y_end, yspacing*y_axis_scale):
             data_in_view = df.loc[
                 (df["avg_vote"] >= x_entry) & (df["avg_vote"] <= (x_entry + xRange / scale)) &
                 (df["rlwide_gross_income"] >= y_entry) & (df["rlwide_gross_income"] <=
@@ -72,7 +75,9 @@ def compute_scags(zoom_level):
             if data_in_view["avg_vote"].size <= 350 or data_in_view["rlwide_gross_income"].size <= 350:
                 continue
 
-            view_scags = scagnostics(data_in_view["avg_vote"], data_in_view["rlwide_gross_income"])
+            data_in_view_sample = data_in_view.sample(n=350)
+
+            view_scags = scagnostics(data_in_view_sample["avg_vote"], data_in_view_sample["rlwide_gross_income"])
 
             dict["[" + str(x_entry) + ", " + str((x_entry + xRange / scale)) + "]; ["
                  + str(y_entry) + ", " + str((y_entry + yRange / scale)) + "]"] = \
@@ -87,19 +92,32 @@ def compute_scags(zoom_level):
                  view_scags['monotonic']]
 
             if zoom_level == 1:
-                with open('first_zoom_scagnostics.csv', 'w') as f:
+                with open('first_zoom_scagnostics_random_sample_x_' + str(x_axis_scale) + '_y_' + str(y_axis_scale) + '.csv', 'w') as f:
                     for key in dict.keys():
                         f.write("%s,%s\n" % (key, dict[key]))
             elif zoom_level == 2:
-                with open('second_zoom_scagnostics.csv', 'w') as f:
+                with open('second_zoom_scagnostics_random_sample_x_' + str(x_axis_scale) + '_y_' + str(y_axis_scale) + '.csv', 'w') as f:
                     for key in dict.keys():
                         f.write("%s,%s\n" % (key, dict[key]))
             elif zoom_level == 3:
-                with open('third_zoom_scagnostics.csv', 'w') as f:
+                with open('third_zoom_scagnostics_random_sample_x_' + str(x_axis_scale) + '_y_' + str(y_axis_scale) + '.csv', 'w') as f:
                     for key in dict.keys():
                         f.write("%s,%s\n" % (key, dict[key]))
+
+    end_time = time.time() - start_time
+
+    with open('random_sample_time.csv', 'a') as f:
+        f.write("%s,%s,%s,%s\n" % (zoom_level, xspacing*x_axis_scale, yspacing*y_axis_scale, end_time))
+
     return ""
 
 
 if __name__ == '__main__':
-    compute_scags(3)
+    compute_scags(1, 1, 1)
+    print("first zoom, x scale: 1, y scale: 1 done!")
+    compute_scags(2, 1, 1)
+    print("second zoom data, x scale: 1, y scale: 1 done!")
+    compute_scags(3, 1, 1)
+    print("third zoom, x scale: 1, y scale: 1 done!")
+
+
