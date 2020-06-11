@@ -358,8 +358,8 @@ while index <= len(third_right) - 1:
 combined = pd.concat([first_avg_left, second_avg_left, third_avg_left],
            ignore_index=True)
 
-data['complexity'] = [(row['avg_time_in_seconds']*1000000)/(row['leaders']*math.log2(row['leaders'])) for i, row in data.iterrows()]
-data['complexity2'] = [row['leaders']*math.log2(row['leaders']) if row['leaders'] > 1 else row['number_of_samples'] for i, row in data.iterrows()]
+data['complexity'] = [(row['avg_time_in_seconds']*1000000)/(row['leaders']+row['subleaders']) for i, row in data.iterrows()]
+data['complexity2'] = [row['leaders'] + row['subleaders'] for i, row in data.iterrows()]
 sns.set()
 ax = plt.gca()
 data.plot(kind='scatter', x='complexity2', y='complexity', ax=ax)
@@ -559,5 +559,5 @@ axs[i].set_ylabel('Time in seconds')
 #plt.xlabel('Leaders * log(leaders)')
 #handles, labels = ax.get_legend_handles_labels()
 #plt.legend(handles=handles[0:], labels=labels)
-plt.savefig('leader_example_comparison_3_15.png')
+plt.savefig('leader_search_avg_complexity.png')
 plt.show()
