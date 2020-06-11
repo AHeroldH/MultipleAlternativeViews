@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ca92a679-cce0-450f-9d11-b70eee95b29d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -273,6 +272,7 @@
       <workItem from="1590133250151" duration="127562000" />
       <workItem from="1591123032213" duration="64537000" />
       <workItem from="1591610383755" duration="15490000" />
+      <workItem from="1591861091349" duration="175000" />
     </task>
     <task id="LOCAL-00001" summary="removed torch from requirements">
       <created>1587912192093</created>
@@ -589,7 +589,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591860651356</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="updated requirement of pillow">
+      <created>1591861114405</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1591861114405</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -597,7 +604,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Committing with non-local server requests!" />
     <MESSAGE value="More time delay for overview, so the server can respond" />
     <MESSAGE value="More time delay for overview again, so the server can respond" />
     <MESSAGE value="More time delay for overview again on right view + debounce on the zoom update, so the pan interactions become a bit more fluid" />
@@ -622,7 +628,8 @@
     <MESSAGE value="A lot of changes: added leader algorithm, multiprocessing (not complete), computed new data sets with different sampling spacing and added behaviour for when user access parts of the visualisation with few data points" />
     <MESSAGE value="non local server" />
     <MESSAGE value="Experiments, their timing and updates to prototype" />
-    <option name="LAST_COMMIT_MESSAGE" value="Experiments, their timing and updates to prototype" />
+    <MESSAGE value="updated requirement of pillow" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated requirement of pillow" />
   </component>
   <component name="WindowStateProjectService">
     <state x="320" y="126" key="#Inspections" timestamp="1587894070271">
@@ -630,6 +637,10 @@
     </state>
     <state x="320" y="115" key="#Inspections/0.0.1440.900@0.0.1440.900" timestamp="1583837477345" />
     <state x="320" y="126" key="#Inspections/0.23.1440.808@0.23.1440.808" timestamp="1587894070271" />
+    <state x="320" y="115" key="#Notifications" timestamp="1591861267053">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="115" key="#Notifications/0.0.1440.900@0.0.1440.900" timestamp="1591861267053" />
     <state x="184" y="89" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589966652772">
       <screen x="0" y="23" width="1440" height="808" />
     </state>
@@ -648,10 +659,10 @@
     </state>
     <state x="458" y="176" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1591611051737" />
     <state x="458" y="181" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1440.808@0.23.1440.808" timestamp="1588194945384" />
-    <state x="302" y="7" width="839" height="893" key="CommitChangelistDialog2" timestamp="1591860649250">
+    <state x="302" y="7" width="839" height="893" key="CommitChangelistDialog2" timestamp="1591861114041">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="302" y="7" width="839" height="893" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1591860649250" />
+    <state x="302" y="7" width="839" height="893" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1591861114041" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.808@0.23.1440.808" timestamp="1589905887816" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.811@0.23.1440.811" timestamp="1588087536490" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.812@0.23.1440.812" timestamp="1588108500556" />
@@ -728,10 +739,10 @@
       <screen x="0" y="23" width="1440" height="808" />
     </state>
     <state width="500" height="445" key="SwitcherDM/0.23.1440.808@0.23.1440.808" timestamp="1587894207684" />
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1591860670449">
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1591861121313">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1591860670449" />
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1591861121313" />
     <state x="320" y="167" key="Vcs.Push.Dialog.v2/0.23.1440.808@0.23.1440.808" timestamp="1587988631928" />
     <state x="320" y="168" key="Vcs.Push.Dialog.v2/0.23.1440.811@0.23.1440.811" timestamp="1588087538658" />
     <state x="378" y="49" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1587543874420">
