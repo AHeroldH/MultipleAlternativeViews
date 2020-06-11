@@ -1,158 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ca92a679-cce0-450f-9d11-b70eee95b29d" name="Default Changelist" comment="non local server">
-      <change afterPath="$PROJECT_DIR$/Experiments/Time/full_data_set_time.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/Time/leader_time.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/Time/leader_time_2_.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/Time/leader_time_best.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/Time/multi_time.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/Time/naive_time.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/Time/naive_time_2.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/Time/naive_time_2_.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/Time/thread_time.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/Time/thread_time_2.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/leader_experiment.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/multi_experiment.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/naive_experiment.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/chosen_leader_comparison.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/comparison_left.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/comparison_right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_clustering_complexity_best.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_clustering_complexity_worst.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_clustering_first.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_clustering_second.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_clustering_third.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_example_comparison_1_05.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_example_comparison_2_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_example_comparison_3_15.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_example_comparison_5_45.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_search_complexity_best.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_search_complexity_worst.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/leader_threshold.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Leader/subleader_threshold.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Naive/naive_comparison.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Naive/naive_complexity.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Naive/naive_example_comparison.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Naive/naive_individual_comparison.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Procs/multi_procs_comparison_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Procs/multi_procs_comparison_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Procs/multi_procs_comparison_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Procs/multi_procs_complexity.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Procs/multi_procs_example_comparison_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Procs/multi_procs_example_comparison_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Procs/multi_procs_example_comparison_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Procs/multi_procs_individual_comparison.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Sampling/sampling_comparison.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Sampling/sampling_individual_comparison.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Threads/multi_threads_comparison_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Threads/multi_threads_comparison_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Threads/multi_threads_comparison_6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Threads/multi_threads_comparison_8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Threads/multi_threads_complexity.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Threads/multi_threads_example_comparison_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Threads/multi_threads_example_comparison_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Threads/multi_threads_example_comparison_6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Threads/multi_threads_example_comparison_8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/Threads/multi_threads_individual_comparison.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/plot_comparison.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/plot_leader_time.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/plot_multi_time.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/plot_naive_time.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plots/plot_sampling_time.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Sample data sets/random_sample_time.csv" afterDir="false" />
+    <list default="true" id="ca92a679-cce0-450f-9d11-b70eee95b29d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_0.5_y_0.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_0.5_y_0.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_0.5_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_0.5_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_1.5_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_1.5_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_1.5_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_1.5_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_1.5_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_1.5_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_1_y_0.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_1_y_0.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_1_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_1_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_1_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_1_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_1_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_1_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_2_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_2_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_2_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_2_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/full data/first_zoom_scagnostics_x_2_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/full_data/first_zoom_scagnostics_x_2_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_0.5_y_0.5.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_0.5_y_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_1.5_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/random sample/first_zoom_scagnostics_random_sample_x_1.5_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_1.5_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/random sample/first_zoom_scagnostics_random_sample_x_1.5_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_1.5_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/random sample/first_zoom_scagnostics_random_sample_x_1.5_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_1_y_0.5.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_1_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/random sample/first_zoom_scagnostics_random_sample_x_1_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_1_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/random sample/first_zoom_scagnostics_random_sample_x_1_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_1_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/random sample/first_zoom_scagnostics_random_sample_x_1_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_2_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/random sample/first_zoom_scagnostics_random_sample_x_2_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_2_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/random sample/first_zoom_scagnostics_random_sample_x_2_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first zoom data/random sample/first_zoom_scagnostics_random_sample_x_2_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_data/random sample/first_zoom_scagnostics_random_sample_x_2_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first_zoom_scagnostics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_scagnostics.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/first_zoom_scagnostics_random_sample.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/first_zoom_scagnostics_random_sample.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/full_data_set_time.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/iris.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_Mon May 04 2020 19:30:03 GMT 0200 (Centraleuropæisk sommertid).csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random_sample_time.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_0.5_y_0.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_0.5_y_0.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_0.5_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_0.5_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_1.5_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_1.5_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_1.5_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_1.5_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_1.5_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_1.5_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_1_y_0.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_1_y_0.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_1_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_1_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_1_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_1_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_1_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_1_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_2_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_2_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_2_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_2_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/full data/second_zoom_scagnostics_x_2_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/full_data/second_zoom_scagnostics_x_2_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_0.5_y_0.5.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_0.5_y_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_1.5_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/random sample/second_zoom_scagnostics_random_sample_x_1.5_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_1.5_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/random sample/second_zoom_scagnostics_random_sample_x_1.5_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_1.5_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/random sample/second_zoom_scagnostics_random_sample_x_1.5_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_1_y_0.5.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_1_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/random sample/second_zoom_scagnostics_random_sample_x_1_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_1_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/random sample/second_zoom_scagnostics_random_sample_x_1_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_1_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/random sample/second_zoom_scagnostics_random_sample_x_1_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_2_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/random sample/second_zoom_scagnostics_random_sample_x_2_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_2_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/random sample/second_zoom_scagnostics_random_sample_x_2_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second zoom data/random sample/second_zoom_scagnostics_random_sample_x_2_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_data/random sample/second_zoom_scagnostics_random_sample_x_2_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second_zoom_scagnostics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_scagnostics.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/second_zoom_scagnostics_random_sample.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/second_zoom_scagnostics_random_sample.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/out-center.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/out-left.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/out-right.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/out.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/interactive_scatterplot.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_0.5_y_0.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_0.5_y_0.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_0.5_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_0.5_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_1.5_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_1.5_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_1.5_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_1.5_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_1.5_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_1.5_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_1_y_0.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_1_y_0.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_1_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_1_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_1_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_1_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_1_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_1_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_2_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_2_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_2_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_2_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/full data/third_zoom_scagnostics_x_2_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/full_data/third_zoom_scagnostics_x_2_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_0.5_y_0.5.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_0.5_y_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_1.5_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/random sample/third_zoom_scagnostics_random_sample_x_1.5_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_1.5_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/random sample/third_zoom_scagnostics_random_sample_x_1.5_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_1.5_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/random sample/third_zoom_scagnostics_random_sample_x_1.5_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_1_y_0.5.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_1_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/random sample/third_zoom_scagnostics_random_sample_x_1_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_1_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/random sample/third_zoom_scagnostics_random_sample_x_1_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_1_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/random sample/third_zoom_scagnostics_random_sample_x_1_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_2_y_1.5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/random sample/third_zoom_scagnostics_random_sample_x_2_y_1.5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_2_y_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/random sample/third_zoom_scagnostics_random_sample_x_2_y_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third zoom data/random sample/third_zoom_scagnostics_random_sample_x_2_y_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_data/random sample/third_zoom_scagnostics_random_sample_x_2_y_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third_zoom_scagnostics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_scagnostics.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/third_zoom_scagnostics_random_sample.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Sample data sets/third_zoom_scagnostics_random_sample.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoom_scag.py" beforeDir="false" afterPath="$PROJECT_DIR$/zoom_scag.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -421,7 +272,7 @@
       <workItem from="1589833871357" duration="53900000" />
       <workItem from="1590133250151" duration="127562000" />
       <workItem from="1591123032213" duration="64537000" />
-      <workItem from="1591610383755" duration="15178000" />
+      <workItem from="1591610383755" duration="15490000" />
     </task>
     <task id="LOCAL-00001" summary="removed torch from requirements">
       <created>1587912192093</created>
@@ -731,7 +582,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589529519821</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Experiments, their timing and updates to prototype">
+      <created>1591860651356</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1591860651356</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -739,7 +597,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="New scagnostics for the three zoom levels, added legend for scagnostics, improvement of panning and overview" />
     <MESSAGE value="Committing with non-local server requests!" />
     <MESSAGE value="More time delay for overview, so the server can respond" />
     <MESSAGE value="More time delay for overview again, so the server can respond" />
@@ -764,7 +621,8 @@
     <MESSAGE value="Non local server on comparable scatterplot" />
     <MESSAGE value="A lot of changes: added leader algorithm, multiprocessing (not complete), computed new data sets with different sampling spacing and added behaviour for when user access parts of the visualisation with few data points" />
     <MESSAGE value="non local server" />
-    <option name="LAST_COMMIT_MESSAGE" value="non local server" />
+    <MESSAGE value="Experiments, their timing and updates to prototype" />
+    <option name="LAST_COMMIT_MESSAGE" value="Experiments, their timing and updates to prototype" />
   </component>
   <component name="WindowStateProjectService">
     <state x="320" y="126" key="#Inspections" timestamp="1587894070271">
@@ -790,10 +648,10 @@
     </state>
     <state x="458" y="176" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1591611051737" />
     <state x="458" y="181" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1440.808@0.23.1440.808" timestamp="1588194945384" />
-    <state x="302" y="29" width="839" height="893" key="CommitChangelistDialog2" timestamp="1589905887816">
-      <screen x="0" y="23" width="1440" height="808" />
+    <state x="302" y="7" width="839" height="893" key="CommitChangelistDialog2" timestamp="1591860649250">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="302" y="7" width="839" height="893" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1589652725876" />
+    <state x="302" y="7" width="839" height="893" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1591860649250" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.808@0.23.1440.808" timestamp="1589905887816" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.811@0.23.1440.811" timestamp="1588087536490" />
     <state x="302" y="29" key="CommitChangelistDialog2/0.23.1440.812@0.23.1440.812" timestamp="1588108500556" />
@@ -805,38 +663,38 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="0" y="101" key="FileDocumentManager.FileCacheConflict/0.0.1440.900@0.0.1440.900" timestamp="1590159023161" />
-    <state width="1398" height="167" key="GridCell.Tab.0.bottom" timestamp="1591860355685">
+    <state width="1398" height="167" key="GridCell.Tab.0.bottom" timestamp="1591861080108">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1878" height="199" key="GridCell.Tab.0.bottom/0.0.1440.900/-1920.140.1920.1080@-1920.140.1920.1080" timestamp="1588237988373" />
-    <state width="1398" height="167" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1591860355685" />
+    <state width="1398" height="167" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1591861080108" />
     <state width="1398" height="159" key="GridCell.Tab.0.bottom/0.23.1440.806@0.23.1440.806" timestamp="1585728638330" />
     <state width="1398" height="167" key="GridCell.Tab.0.bottom/0.23.1440.808@0.23.1440.808" timestamp="1590065043366" />
     <state width="1398" height="199" key="GridCell.Tab.0.bottom/0.23.1440.811@0.23.1440.811" timestamp="1588087424129" />
     <state width="1398" height="199" key="GridCell.Tab.0.bottom/0.23.1440.812@0.23.1440.812" timestamp="1588144841081" />
-    <state width="1398" height="167" key="GridCell.Tab.0.center" timestamp="1591860355684">
+    <state width="1398" height="167" key="GridCell.Tab.0.center" timestamp="1591861080107">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1878" height="199" key="GridCell.Tab.0.center/0.0.1440.900/-1920.140.1920.1080@-1920.140.1920.1080" timestamp="1588237988371" />
-    <state width="1398" height="167" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1591860355684" />
+    <state width="1398" height="167" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1591861080107" />
     <state width="1398" height="159" key="GridCell.Tab.0.center/0.23.1440.806@0.23.1440.806" timestamp="1585728638329" />
     <state width="1398" height="167" key="GridCell.Tab.0.center/0.23.1440.808@0.23.1440.808" timestamp="1590065043365" />
     <state width="1398" height="199" key="GridCell.Tab.0.center/0.23.1440.811@0.23.1440.811" timestamp="1588087424128" />
     <state width="1398" height="199" key="GridCell.Tab.0.center/0.23.1440.812@0.23.1440.812" timestamp="1588144841080" />
-    <state width="1398" height="167" key="GridCell.Tab.0.left" timestamp="1591860355682">
+    <state width="1398" height="167" key="GridCell.Tab.0.left" timestamp="1591861080106">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1878" height="199" key="GridCell.Tab.0.left/0.0.1440.900/-1920.140.1920.1080@-1920.140.1920.1080" timestamp="1588237988370" />
-    <state width="1398" height="167" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1591860355682" />
+    <state width="1398" height="167" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1591861080106" />
     <state width="1398" height="159" key="GridCell.Tab.0.left/0.23.1440.806@0.23.1440.806" timestamp="1585728638329" />
     <state width="1398" height="167" key="GridCell.Tab.0.left/0.23.1440.808@0.23.1440.808" timestamp="1590065043365" />
     <state width="1398" height="199" key="GridCell.Tab.0.left/0.23.1440.811@0.23.1440.811" timestamp="1588087424128" />
     <state width="1398" height="199" key="GridCell.Tab.0.left/0.23.1440.812@0.23.1440.812" timestamp="1588144841079" />
-    <state width="1398" height="167" key="GridCell.Tab.0.right" timestamp="1591860355684">
+    <state width="1398" height="167" key="GridCell.Tab.0.right" timestamp="1591861080108">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1878" height="199" key="GridCell.Tab.0.right/0.0.1440.900/-1920.140.1920.1080@-1920.140.1920.1080" timestamp="1588237988372" />
-    <state width="1398" height="167" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1591860355684" />
+    <state width="1398" height="167" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1591861080108" />
     <state width="1398" height="159" key="GridCell.Tab.0.right/0.23.1440.806@0.23.1440.806" timestamp="1585728638330" />
     <state width="1398" height="167" key="GridCell.Tab.0.right/0.23.1440.808@0.23.1440.808" timestamp="1590065043365" />
     <state width="1398" height="199" key="GridCell.Tab.0.right/0.23.1440.811@0.23.1440.811" timestamp="1588087424129" />
@@ -870,10 +728,10 @@
       <screen x="0" y="23" width="1440" height="808" />
     </state>
     <state width="500" height="445" key="SwitcherDM/0.23.1440.808@0.23.1440.808" timestamp="1587894207684" />
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1589529520698">
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2" timestamp="1591860670449">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1589529520698" />
+    <state x="320" y="161" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1591860670449" />
     <state x="320" y="167" key="Vcs.Push.Dialog.v2/0.23.1440.808@0.23.1440.808" timestamp="1587988631928" />
     <state x="320" y="168" key="Vcs.Push.Dialog.v2/0.23.1440.811@0.23.1440.811" timestamp="1588087538658" />
     <state x="378" y="49" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1587543874420">
