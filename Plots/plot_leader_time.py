@@ -355,17 +355,14 @@ while index <= len(third_right) - 1:
         avg_index += 1
         index += 1
 
-# combined = pd.concat([first_avg_left, second_avg_left, third_avg_left],
-#            ignore_index=True)
-#
-# dummy = np.linspace(1,20000,100)
-# y = [np.log(x) for x in np.nditer(dummy)]
-#
-# data['complexity'] = [(row['avg_time_in_seconds']*1000000)/(row['leaders']*math.log2(row['leaders'])) for i, row in data.iterrows()]
-# data['complexity2'] = [row['leaders']*math.log2(row['leaders']) if row['leaders'] > 1 else row['number_of_samples'] for i, row in data.iterrows()]
-# sns.set()
-# ax = plt.gca()
-# data.plot(kind='scatter', x='complexity2', y='complexity', ax=ax)
+combined = pd.concat([first_avg_left, second_avg_left, third_avg_left],
+           ignore_index=True)
+
+data['complexity'] = [(row['avg_time_in_seconds']*1000000)/(row['leaders']*math.log2(row['leaders'])) for i, row in data.iterrows()]
+data['complexity2'] = [row['leaders']*math.log2(row['leaders']) if row['leaders'] > 1 else row['number_of_samples'] for i, row in data.iterrows()]
+sns.set()
+ax = plt.gca()
+data.plot(kind='scatter', x='complexity2', y='complexity', ax=ax)
 
 # first_left['complexity'] = [(row['avg_time_in_seconds']*1000000000)/(row['number_of_samples']*9) for i, row in first_left.iterrows()]
 # second_left['complexity'] = [(row['avg_time_in_seconds']*1000000000)/(row['number_of_samples']*9) for i, row in second_left.iterrows()]
