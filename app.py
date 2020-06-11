@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import json
-from multiprocessing import Pool, Lock, Manager
+import multiprocessing
 from flask import Flask
 from flask import request
 from flask import render_template
@@ -23,52 +23,19 @@ CORS(app)
 
 path = '.'
 df = pd.read_csv('movie-data.csv')
-
 orig_x = [1.0, 9.0]
 orig_y = [0.0, 1515047671.0]
-
 x = [1.0, 9.0]
 y = [0.0, 1515047671.0]
 xRange = x[1] - x[0]
 yRange = y[1] - y[0]
 no_of_zoom = 0
-
 left_view_x = [1.0, 9.0]
 left_view_y = [0.0, 1515047671.0]
 center_view_x = [1.0, 9.0]
 center_view_y = [0.0, 1515047671.0]
 right_view_x = [1.0, 9.0]
 right_view_y = [0.0, 1515047671.0]
-first_zoom_scagnostics = {}
-with open('first_zoom_scagnostics.csv', mode='r') as infile:
-    reader = csv.reader(infile)
-    for row in reader:
-        first_zoom_scagnostics[str(row[0] + ", " + row[1] + ", " + row[2])] = [float(str(row[3])[1:]), float(row[4]),
-                                                                               float(row[5]), float(row[6]),
-                                                                               float(row[7]), float(row[8]),
-                                                                               float(row[9]), float(row[10]),
-                                                                               float(str(row[11])[
-                                                                                     0:len(str(row[11])) - 1])]
-second_zoom_scagnostics = {}
-with open('second_zoom_scagnostics.csv', mode='r') as infile:
-    reader = csv.reader(infile)
-    for row in reader:
-        second_zoom_scagnostics[str(row[0] + ", " + row[1] + ", " + row[2])] = [float(str(row[3])[1:]), float(row[4]),
-                                                                                float(row[5]), float(row[6]),
-                                                                                float(row[7]), float(row[8]),
-                                                                                float(row[9]), float(row[10]),
-                                                                                float(str(row[11])[
-                                                                                      0:len(str(row[11])) - 1])]
-third_zoom_scagnostics = {}
-with open('third_zoom_scagnostics.csv', mode='r') as infile:
-    reader = csv.reader(infile)
-    for row in reader:
-        third_zoom_scagnostics[str(row[0] + ", " + row[1] + ", " + row[2])] = [float(str(row[3])[1:]), float(row[4]),
-                                                                               float(row[5]), float(row[6]),
-                                                                               float(row[7]), float(row[8]),
-                                                                               float(row[9]), float(row[10]),
-                                                                               float(str(row[11])[
-                                                                                     0:len(str(row[11])) - 1])]
 rowNo = 0
 diff2 = 0
 diff3 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -81,6 +48,39 @@ current_scag = False
 diff1_cluster_leader = ""
 leader = False
 multithread = False
+manager = multiprocessing.Manager()
+lock = manager.Lock()
+
+first_zoom_scagnostics = {}
+with open('Sample data sets/first_zoom_scagnostics.csv', mode='r') as infile:
+    reader = csv.reader(infile)
+    for row in reader:
+        first_zoom_scagnostics[str(row[0] + ", " + row[1] + ", " + row[2])] = [float(str(row[3])[1:]), float(row[4]),
+                                                                               float(row[5]), float(row[6]),
+                                                                               float(row[7]), float(row[8]),
+                                                                               float(row[9]), float(row[10]),
+                                                                               float(str(row[11])[
+                                                                                     0:len(str(row[11])) - 1])]
+second_zoom_scagnostics = {}
+with open('Sample data sets/second_zoom_scagnostics.csv', mode='r') as infile:
+    reader = csv.reader(infile)
+    for row in reader:
+        second_zoom_scagnostics[str(row[0] + ", " + row[1] + ", " + row[2])] = [float(str(row[3])[1:]), float(row[4]),
+                                                                                float(row[5]), float(row[6]),
+                                                                                float(row[7]), float(row[8]),
+                                                                                float(row[9]), float(row[10]),
+                                                                                float(str(row[11])[
+                                                                                      0:len(str(row[11])) - 1])]
+third_zoom_scagnostics = {}
+with open('Sample data sets/third_zoom_scagnostics.csv', mode='r') as infile:
+    reader = csv.reader(infile)
+    for row in reader:
+        third_zoom_scagnostics[str(row[0] + ", " + row[1] + ", " + row[2])] = [float(str(row[3])[1:]), float(row[4]),
+                                                                               float(row[5]), float(row[6]),
+                                                                               float(row[7]), float(row[8]),
+                                                                               float(row[9]), float(row[10]),
+                                                                               float(str(row[11])[
+                                                                                     0:len(str(row[11])) - 1])]
 
 
 @app.route('/')
@@ -103,7 +103,7 @@ def leader():
     return render_template('index.html')
 
 
-@app.route('/multithread')
+@app.route('/multiprocs')
 def multithread():
     global leader
     global multithread
@@ -111,11 +111,6 @@ def multithread():
     leader = False
     multithread = True
     return render_template('index.html')
-
-
-@app.route('/interactive-scatterplot')
-def interactive_scatterplot():
-    return render_template('interactive_scatterplot.html')
 
 
 def scagnostics(x, y):
@@ -161,36 +156,36 @@ def get_coords():
     global left_view
     global right_view
     global current_scag
+    global no_of_zoom
+    global x
+    global y
+    global current_view_scagnostics
+    global current_view_list
 
     left_view = False
     right_view = False
     current_scag = False
 
-    global no_of_zoom
     no_of_zoom = int(request.args['zoomNo'])
-    global x
     x_coord = ast.literal_eval(request.args['x'])
+    y_coord = ast.literal_eval(request.args['y'])
 
     if no_of_zoom != 0:
         x = x_coord
     else:
         x = orig_x
 
-    global y
-    y_coord = ast.literal_eval(request.args['y'])
-
     if no_of_zoom != 0:
         y = y_coord
     else:
         y = orig_y
 
-    global current_view_scagnostics
-    global current_view_list
     data_in_view = df.loc[(df["avg_vote"] >= x[0]) & (df["avg_vote"] <= x[1]) & (df["rlwide_gross_income"] >= y[0])
                           & (df["rlwide_gross_income"] <= y[1])]
 
     if data_in_view["avg_vote"].size <= 10 or data_in_view["rlwide_gross_income"].size <= 10:
         current_view_list = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
     else:
         current_view_scagnostics = scagnostics(data_in_view["avg_vote"], data_in_view["rlwide_gross_income"])
 
@@ -202,6 +197,9 @@ def get_coords():
                              current_view_scagnostics['skinny'], current_view_scagnostics['stringy'],
                              current_view_scagnostics['monotonic']]
 
+    print("focus region")
+    print(current_view_list)
+
     comparable_views = {}
 
     if no_of_zoom == 1:
@@ -210,8 +208,6 @@ def get_coords():
         comparable_views = second_zoom_scagnostics
     elif no_of_zoom == 3:
         comparable_views = third_zoom_scagnostics
-
-    print(len(comparable_views))
 
     key_list = list(comparable_views.keys())
     val_list = list(comparable_views.values())
@@ -236,7 +232,7 @@ def calc_alternatives(lock, comparable_views, key_list, val_list):
     lock.release()
 
     while lock.locked():
-        time.sleep(0.100)
+        time.sleep(0.1)
 
     lock.acquire()
 
@@ -247,46 +243,36 @@ def calc_alternatives(lock, comparable_views, key_list, val_list):
 
     lock.release()
 
-    print("left_view_x: " + str(left_view_x))
-    print("left_view_y: " + str(left_view_y))
-    print("center_view_x: " + str(center_view_x))
-    print("center_view_y: " + str(center_view_y))
-    print("right_view_x: " + str(right_view_x))
-    print("right_view_y: " + str(right_view_y))
 
+def set_left_view_multi(comparable_views, current_view_list, spacing, left_result_scags):
+    diff1 = 0
+    diff1_scags = []
 
-def set_left_view_multi(comparable_views, current_view_list, spacing, lock, diff1, diff1_scags, left_view_x, left_view_y):
-    if multithread:
-        comparable_views = dict(item for item in comparable_views)
+    comparable_views = dict(item for item in comparable_views)
 
     for view, scags in comparable_views.items():
-
-        # view_diff = diff_of_lists(scags, current_view_list)
-
         window = view.split("; ")
         window_x = ast.literal_eval(window[0])
-        window_y = ast.literal_eval(window[1])
 
-        if (((x[0] - spacing) <= window_x[0] <= (x[1] + spacing)) and ((x[0] - spacing) <= window_x[1] <= (x[1] + spacing))):
+        if (((x[0] - spacing) <= window_x[0] <= (x[1] + spacing)) and (
+                (x[0] - spacing) <= window_x[1] <= (x[1] + spacing))):
             continue
 
         view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
 
-        lock.acquire()
-
-        new_diff1 = max(diff1.value, view_diff)
+        new_diff1 = max(diff1, view_diff)
 
         if new_diff1 == view_diff:
-            diff1.value = view_diff
-            for i in range(len(diff1_scags)):
-                diff1_scags[i] = scags[i]
+            diff1 = view_diff
+            diff1_scags = scags
             left = view.split("; ")
-            left_view_x_list = ast.literal_eval(left[0])
-            left_view_y_list = ast.literal_eval(left[1])
-            for i in range(len(left_view_x)):
-                left_view_x[i] = left_view_x_list[i]
-                left_view_y[i] = left_view_y_list[i]
-        lock.release()
+            left_view_x = ast.literal_eval(left[0])
+            left_view_y = ast.literal_eval(left[1])
+
+    lock.acquire()
+    if diff1_scags:
+        left_result_scags.append(diff1_scags)
+    lock.release()
 
 
 def naive_set_left_view(comparable_views, current_view_list, key_list, val_list):
@@ -296,6 +282,8 @@ def naive_set_left_view(comparable_views, current_view_list, key_list, val_list)
     global left_view
 
     left_view = False
+    diff1 = 0
+
 
     if current_view_list == [0, 0, 0, 0, 0, 0, 0, 0, 0]:
         diff1_scags = current_view_list
@@ -306,8 +294,6 @@ def naive_set_left_view(comparable_views, current_view_list, key_list, val_list)
 
         return ""
 
-    space = 0
-
     if no_of_zoom == 1:
         space = 1.0
     elif no_of_zoom == 2:
@@ -316,31 +302,35 @@ def naive_set_left_view(comparable_views, current_view_list, key_list, val_list)
         space = 0.5
 
     if multithread:
-        manager = Manager()
-        lock = manager.Lock()
-        diff1 = manager.Value('d', 0.0)
-        diff1_scags_list = manager.list(range(9))
-        left_view_x = manager.list(range(2))
-        left_view_y = manager.list(range(2))
-        p = Pool(4)
+        left_result_scags = manager.list()
+        p = multiprocessing.pool.ThreadPool(4)
 
         comparable_list = list(comparable_views.items())
-        chunks = [comparable_list[i:i + 4] for i in range(0, len(comparable_list))]
-        left_func = partial(set_left_view_multi, current_view_list=current_view_list, spacing=space, lock=lock, diff1=diff1,
-                            diff1_scags=diff1_scags_list, left_view_x=left_view_x, left_view_y=left_view_y)
+        chunks = [comparable_list[i:i + int(len(comparable_list) / 4)] for i in
+                  range(0, len(comparable_list), int(len(comparable_list) / 4))]
+        left_func = partial(set_left_view_multi, current_view_list=current_view_list, spacing=space,
+                            left_result_scags=left_result_scags)
         p.map_async(left_func, chunks)
         p.close()
         p.join()
+
+        best_diff = 0
+        view = ""
+
+        for i in range(len(left_result_scags)):
+            diff = distance.sqeuclidean(np.asarray(current_view_list), np.asarray(left_result_scags[i]))
+            if diff > best_diff:
+                best_diff = diff
+                view = key_list[val_list.index(left_result_scags[i])]
+                diff1_scags = left_result_scags[i]
+        left = view.split("; ")
+        left_view_x = ast.literal_eval(left[0])
+        left_view_y = ast.literal_eval(left[1])
+
     else:
-        diff1 = 0
-
         for view, scags in comparable_views.items():
-
-            # view_diff = diff_of_lists(scags, current_view_list)
-
             window = view.split("; ")
             window_x = ast.literal_eval(window[0])
-            window_y = ast.literal_eval(window[1])
 
             if (((x[0] - space) <= window_x[0] <= (x[1] + space)) and (
                     (x[0] - space) <= window_x[1] <= (x[1] + space))):
@@ -360,20 +350,21 @@ def naive_set_left_view(comparable_views, current_view_list, key_list, val_list)
     left_view = True
 
 
-def set_right_view_multi(comparable_views, current_view_list, key_list, val_list, spacing, lock, heap, top_ten, diff2,
-                         right_view_x, right_view_y, diff_1_2):
-    if multithread:
-        comparable_views = dict(item for item in comparable_views)
+def set_right_view_multi(comparable_views, current_view_list, key_list, val_list, spacing, right_result_scags):
+    diff_1_2 = 0
+    heap = []
+    top_ten = [0 for i in range(10)]
+
+    comparable_views = dict(item for item in comparable_views)
 
     for view, scags in comparable_views.items():
-        smaller_diff = False
         window = view.split("; ")
         window_x = ast.literal_eval(window[0])
-        window_y = ast.literal_eval(window[1])
 
-        if ((((left_view_x[0] - spacing) <= window_x[0] <= (left_view_x[1] + spacing)) and ((left_view_x[0] - spacing)
-            <= window_x[1] <= (left_view_x[1] + spacing)))) or (((x[0] - spacing) <= window_x[0] <= (x[1] + spacing))
-            and ((x[0] - spacing) <= window_x[1] <= (x[1] + spacing))):
+        if ((((left_view_x[0] - spacing) <= window_x[0] <= (left_view_x[1] + spacing)) and (
+                (left_view_x[0] - spacing) <= window_x[1] <= (left_view_x[1] + spacing)))) or \
+                (((x[0] - spacing) <= window_x[0] <= (x[1] + spacing))
+                 and ((x[0] - spacing) <= window_x[1] <= (x[1] + spacing))):
             continue
 
         view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
@@ -382,35 +373,29 @@ def set_right_view_multi(comparable_views, current_view_list, key_list, val_list
             if (ele - 0.05) <= view_diff <= (ele + 0.05):
                 continue
 
-        lock.acquire()
+        if len(heap) < 10:
+            heappush(heap, view_diff)
+        else:
+            heappushpop(heap, view_diff)
+        if view_diff in heap:
+            top_ten[heap.index(view_diff)] = scags
 
-        for diff in heap:
-            if diff < view_diff:
-                smaller_diff = True
-                break
+    for ele in top_ten:
+        if ele == 0:
+            continue
+        if distance.euclidean(np.asarray(ele), np.asarray(diff1_scags)) > diff_1_2:
+            diff_1_2 = distance.sqeuclidean(np.asarray(ele), np.asarray(diff1_scags))
+            diff2 = ele
 
-        if smaller_diff:
-            heap.remove(min(heap))
-            top_ten.remove(heap.index(min(heap)))
-            heap.append(view_diff)
-            top_ten.append(scags)
+    if diff2 == 0 or len(heap) == 0:
+        naive_set_right_view(comparable_views, current_view_list, key_list, val_list)
 
-        for ele in top_ten:
-            if ele == 0:
-                continue
-            if distance.euclidean(np.asarray(ele), np.asarray(diff1_scags)) > diff_1_2.value:
-                diff_1_2.value = distance.euclidean(np.asarray(ele), np.asarray(diff1_scags))
-                for i in range(len(diff2)):
-                    diff2[i] = ele[i]
+    view = key_list[val_list.index(diff2)]
+    right = view.split("; ")
 
-        right_view_x_list = window_x
-        right_view_y_list = window_y
-        for i in range(len(right_view_x)):
-            right_view_x[i] = right_view_x_list[i]
-            right_view_y[i] = right_view_y_list[i]
-
-        lock.release()
-        print(right_view_x)
+    lock.acquire()
+    right_result_scags.append(diff2)
+    lock.release()
 
 
 def naive_set_right_view(comparable_views, current_view_list, key_list, val_list):
@@ -418,8 +403,15 @@ def naive_set_right_view(comparable_views, current_view_list, key_list, val_list
     global right_view_y
     global diff2
     global right_view
+    global diff_1_2
+    global heap
+    global top_ten
+    global manager
+    global lock
 
     right_view = False
+    diff_1_2 = 0
+    heap = []
 
     if current_view_list == [0, 0, 0, 0, 0, 0, 0, 0, 0]:
         diff2 = current_view_list
@@ -429,8 +421,6 @@ def naive_set_right_view(comparable_views, current_view_list, key_list, val_list
         right_view = True
         return ""
 
-    space = 0
-
     if no_of_zoom == 1:
         space = 1.0
     elif no_of_zoom == 2:
@@ -439,54 +429,47 @@ def naive_set_right_view(comparable_views, current_view_list, key_list, val_list
         space = 0.5
 
     if multithread:
-        manager = Manager()
-        lock = manager.Lock()
-        diff_1_2 = manager.Value('d', 0.0)
-        heap = manager.list([0 for i in range(10)])
-        top_ten = manager.list([0 for i in range(10)])
-        diff2 = manager.list(range(9))
-        right_view_x = manager.list(range(2))
-        right_view_y = manager.list(range(2))
-        p = Pool(4)
+        right_result_scags = manager.list()
+        p = multiprocessing.pool.ThreadPool(4)
 
         comparable_list = list(comparable_views.items())
-        chunks = [comparable_list[i:i + 4] for i in range(0, len(comparable_list))]
+        chunks = [comparable_list[i:i + int(len(comparable_list) / 4)] for i in
+                  range(0, len(comparable_list), int(len(comparable_list) / 4))]
         right_func = partial(set_right_view_multi, current_view_list=current_view_list, key_list=key_list, val_list=val_list,
-                             spacing=space, lock=lock, heap=heap, top_ten=top_ten, diff2=diff2,
-                             right_view_x=right_view_x, right_view_y=right_view_y, diff_1_2=diff_1_2)
+                             spacing=space, right_result_scags=right_result_scags)
         p.map_async(right_func, chunks)
         p.close()
         p.join()
-        print("after")
-        print(right_view_x)
-        
+
+        best_diff = 0
+        view = ""
+
+        for i in range(len(right_result_scags)):
+            diff = distance.sqeuclidean(np.asarray(current_view_list), np.asarray(right_result_scags[i]))
+            if diff > best_diff:
+                best_diff = diff
+                view = key_list[val_list.index(right_result_scags[i])]
+
+        right = view.split("; ")
+        right_view_x = ast.literal_eval(right[0])
+        right_view_y = ast.literal_eval(right[1])
+
     else:
         diff_1_2 = 0
         heap = []
-        three_best_diff2 = [0 for i in range(10)]
+        top_ten = [0 for i in range(10)]
         view_list = [0 for i in range(10)]
         space = 0
 
-        if no_of_zoom == 1:
-            space = 1.0
-        elif no_of_zoom == 2:
-            space = 0.75
-        else:
-            space = 0.5
-
         for view, scags in comparable_views.items():
-
             window = view.split("; ")
             window_x = ast.literal_eval(window[0])
-            window_y = ast.literal_eval(window[1])
 
-            if ((((left_view_x[0] - space) <= window_x[0] <= (left_view_x[1] + space)) and (
-                    (left_view_x[0] - space) <= window_x[1] <=
-                    (left_view_x[1] + space)))) or (((x[0] - space) <= window_x[0] <= (x[1] + space)) and ((x[0]
-                    - space) <= window_x[1] <= (x[1] + space))):
+            if ((((left_view_x[0] - space) <= window_x[0] <= (left_view_x[1] + space)) and
+                 ((left_view_x[0] - space) <= window_x[1] <= (left_view_x[1] + space)))) or \
+                    (((x[0] - space) <= window_x[0] <= (x[1] + space)) and
+                     ((x[0] - space) <= window_x[1] <= (x[1] + space))):
                 continue
-
-            # view_diff = diff_of_lists(scags, current_view_list)
 
             view_diff = distance.sqeuclidean(np.asarray(scags), np.asarray(current_view_list))
 
@@ -499,10 +482,10 @@ def naive_set_right_view(comparable_views, current_view_list, key_list, val_list
             else:
                 heappushpop(heap, view_diff)
             if view_diff in heap:
-                three_best_diff2[heap.index(view_diff)] = scags
+                top_ten[heap.index(view_diff)] = scags
                 view_list[heap.index(view_diff)] = view
 
-        for ele in three_best_diff2:
+        for ele in top_ten:
             if ele == 0:
                 continue
             if distance.euclidean(np.asarray(ele), np.asarray(diff1_scags)) > diff_1_2:
@@ -578,6 +561,9 @@ def leader_set_left_view(current_view_list):
             left_view_x = ast.literal_eval(left[0])
             left_view_y = ast.literal_eval(left[1])
 
+    print("left scags:")
+    print(diff1_scags)
+
     left_view = True
 
 
@@ -618,8 +604,6 @@ def leader_set_right_view(current_view_list):
 
     cluster_leader = ""
 
-    print("left cluster leader " + str(diff1_cluster_leader))
-
     for leader in comparable_leaders.keys():
 
         if leader == diff1_cluster_leader:
@@ -631,8 +615,6 @@ def leader_set_right_view(current_view_list):
 
         if diff2_leader == view_diff:
             cluster_leader = leader
-
-    print("right cluster leader " + str(cluster_leader))
 
     for subleader in comparable_subleaders[cluster_leader]:
 
@@ -647,13 +629,15 @@ def leader_set_right_view(current_view_list):
             right_view_x = ast.literal_eval(right[0])
             right_view_y = ast.literal_eval(right[1])
 
+    print("right scags:")
+    print(diff2)
+
     right_view = True
 
 
 def find_leader(comparable_views):
     cluster_leaders_views = {}
     cluster_leaders_scags = {}
-
     leader_list = []
 
     for view, scags in comparable_views.items():
@@ -669,7 +653,7 @@ def find_leader(comparable_views):
             leader_scag = cluster_leaders_scags[leader]
             similarity = distance.euclidean(leader_scag, scags)
 
-            if similarity < 0.3:
+            if similarity < 0.2:
                 cluster_leaders_views[leader].append(view)
                 in_cluster = True
                 break
@@ -678,7 +662,6 @@ def find_leader(comparable_views):
             cluster_leaders_views[view] = []
             cluster_leaders_scags[view] = scags
             leader_list.append(view)
-            print("leader: " + str(len(leader_list)))
 
     return cluster_leaders_views, cluster_leaders_scags
 
@@ -688,7 +671,6 @@ def find_subleaders(comparable_views):
 
     cluster_subleader_views = {}
     cluster_subleader_scags = {}
-
     subleader_list = []
 
     for leader, cluster in cluster_leader_views.items():
@@ -709,8 +691,7 @@ def find_subleaders(comparable_views):
                 subleader_scag = cluster_subleader_scags[subleader]
                 similarity = distance.euclidean(subleader_scag, comparable_views[cluster[item]])
 
-                if similarity < 0.26:
-                    #cluster_subleader_views[subleader].append(cluster[item])
+                if similarity < 0.1:
                     in_cluster = True
                     break
 
@@ -718,17 +699,16 @@ def find_subleaders(comparable_views):
                 cluster_subleader_views[leader].append(cluster[item])
                 cluster_subleader_scags[cluster[item]] = comparable_views[cluster[item]]
                 subleader_list.append(cluster[item])
-                print("subleader: " + str(len(subleader_list)))
 
     return cluster_leader_views, cluster_leader_scags, cluster_subleader_views, cluster_subleader_scags
 
 
 first_cluster_leaders_views, first_cluster_leaders_scags, first_cluster_subleaders_views, \
-    first_cluster_subleaders_scags = find_subleaders(first_zoom_scagnostics)
+first_cluster_subleaders_scags = find_subleaders(first_zoom_scagnostics)
 second_cluster_leaders_views, second_cluster_leaders_scags, second_cluster_subleaders_views, \
-    second_cluster_subleaders_scags = find_subleaders(second_zoom_scagnostics)
+second_cluster_subleaders_scags = find_subleaders(second_zoom_scagnostics)
 third_cluster_leaders_views, third_cluster_leaders_scags, third_cluster_subleaders_views, \
-    third_cluster_subleaders_scags = find_subleaders(third_zoom_scagnostics)
+third_cluster_subleaders_scags = find_subleaders(third_zoom_scagnostics)
 
 
 @app.route('/get-left', methods=['GET', 'POST'])
