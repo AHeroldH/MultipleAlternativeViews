@@ -70,8 +70,6 @@ def set_left_view_multi(comparable_views, current_view_list, no_of_zoom, x, left
 
         view_diff = (sum([(a-b)** 2 for a,b in zip(scags, current_view_list)]))**(1/2)
 
-        #view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
-
         new_diff1 = max(diff1, view_diff)
 
         if new_diff1 == view_diff:
@@ -113,8 +111,6 @@ def set_right_view_multi(comparable_views, current_view_list, key_list, val_list
 
         view_diff = (sum([(a - b) ** 2 for a, b in zip(scags, current_view_list)]))**(1/2)
 
-        #view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
-
         for ele in heap:
             if (ele - 0.05) <= view_diff <= (ele + 0.05):
                 continue
@@ -129,8 +125,8 @@ def set_right_view_multi(comparable_views, current_view_list, key_list, val_list
     for ele in top_ten:
         if ele == 0:
             continue
-        if distance.euclidean(np.asarray(ele), np.asarray(diff1_scags)) > diff_1_2:
-            diff_1_2 = distance.sqeuclidean(np.asarray(ele), np.asarray(diff1_scags))
+        if (sum([(a - b) ** 2 for a, b in zip(ele, diff1_scags)]))**(1/2) > diff_1_2:
+            diff_1_2 = (sum([(a - b) ** 2 for a, b in zip(ele, diff1_scags)]))**(1/2)
             diff2 = ele
 
     right_result_scags.append(diff2)
@@ -169,7 +165,7 @@ def start_left(procs, comparable_views, example_list, key_list, val_list, no_of_
     view = ""
 
     for i in range(len(left_result_scags)):
-        diff = distance.sqeuclidean(np.asarray(example_list), np.asarray(left_result_scags[i]))
+        diff = (sum([(a - b) ** 2 for a, b in zip(example_list, left_result_scags[i])]))**(1/2)
         if diff > best_diff:
             best_diff = diff
             view = key_list[val_list.index(left_result_scags[i])]
@@ -197,7 +193,7 @@ def start_right(procs, comparable_views, example_list, key_list, val_list, no_of
     view = ""
 
     for i in range(len(right_result_scags)):
-        diff = distance.sqeuclidean(np.asarray(example_list), np.asarray(right_result_scags[i]))
+        diff = (sum([(a - b) ** 2 for a, b in zip(example_list, right_result_scags[i])]))**(1/2)
         if diff > best_diff:
             best_diff = diff
             view = key_list[val_list.index(right_result_scags[i])]

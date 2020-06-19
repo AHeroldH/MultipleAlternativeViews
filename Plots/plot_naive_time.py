@@ -276,23 +276,23 @@ while index <= len(third_right) - 1:
 # axs[2].set_xlabel('Number of samples')
 # axs[2].set_ylabel('Time in seconds')
 
-sns.set()
-
-fig, axs = plt.subplots(1, 2)
-fig.set_figwidth(11)
-first_avg_left.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='blue', ax=axs[0], label='First zoom')
-second_avg_left.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='green', ax=axs[0], label='Second zoom')
-third_avg_left.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='red', ax=axs[0], label='Third zoom')
-axs[0].set_title('Left alternative')
-axs[0].set_xlabel('Number of samples')
-axs[0].set_ylabel('Time in seconds')
-
-first_avg_right.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='blue', ax=axs[1], label='First zoom')
-second_avg_right.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='green', ax=axs[1], label='Second zoom')
-third_avg_right.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='red', ax=axs[1], label='Third zoom')
-axs[1].set_title('Right alternative')
-axs[1].set_xlabel('Number of samples')
-axs[1].set_ylabel('Time in seconds')
+# sns.set()
+#
+# fig, axs = plt.subplots(1, 2)
+# fig.set_figwidth(11)
+# first_avg_left.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='blue', ax=axs[0], label='First zoom')
+# second_avg_left.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='green', ax=axs[0], label='Second zoom')
+# third_avg_left.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='red', ax=axs[0], label='Third zoom')
+# axs[0].set_title('Left alternative')
+# axs[0].set_xlabel('Number of samples')
+# axs[0].set_ylabel('Time in seconds')
+#
+# first_avg_right.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='blue', ax=axs[1], label='First zoom')
+# second_avg_right.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='green', ax=axs[1], label='Second zoom')
+# third_avg_right.plot(kind='line', x='number_of_samples', y='avg_time_in_seconds', color='red', ax=axs[1], label='Third zoom')
+# axs[1].set_title('Right alternative')
+# axs[1].set_xlabel('Number of samples')
+# axs[1].set_ylabel('Time in seconds')
 
 # first_left_first = first_avg_left.loc[first_avg_left['example'] == '[5.0;  9.0];  [757523835.5;  1515047671.0]']
 # first_left_second = first_avg_left.loc[first_avg_left['example'] == '[5.0;  9.0];  [0.0;  757523835.5]']
@@ -421,17 +421,19 @@ axs[1].set_ylabel('Time in seconds')
 # axs[i].set_xlabel('Number of samples')
 # axs[i].set_ylabel('Time in seconds')
 
-# sns.set()
-# ax = plt.gca()
-#
-# combined.plot(kind='scatter', x='number_of_samples', y='complexity', color='blue', ax=ax)
-# ax.axhline(y=10, color='green', label='$c_1$')
-# ax.axhline(y=35, color='purple', label='$c_2$')
-# ax.axvline(x=2000, color='red', label='$n_0$')
-#
-# plt.ylabel('Time in microseconds / number of samples')
-# plt.xlabel('Number of samples')
-# handles, labels = ax.get_legend_handles_labels()
-# plt.legend(handles=handles[0:], labels=labels)
-plt.savefig('naive_comparison.png')
+sns.set()
+ax = plt.gca()
+
+data['complexity'] = [(row['avg_time_in_seconds']*1000000)/row['number_of_samples'] for i, row in data.iterrows()]
+
+data.plot(kind='scatter', x='number_of_samples', y='complexity', color='green', ax=ax)
+ax.axhline(y=10, color='red', label='$c_1$')
+ax.axhline(y=35, color='blue', label='$c_2$')
+ax.axvline(x=2000, color='black', label='$n_0$', linestyle='dashed')
+
+plt.ylabel('Time in microseconds / number of samples')
+plt.xlabel('Number of samples')
+handles, labels = ax.get_legend_handles_labels()
+plt.legend(handles=handles[0:], labels=labels)
+plt.savefig('naive_complexity.png')
 plt.show()

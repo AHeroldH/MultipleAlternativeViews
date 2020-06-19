@@ -197,9 +197,6 @@ def get_coords():
                              current_view_scagnostics['skinny'], current_view_scagnostics['stringy'],
                              current_view_scagnostics['monotonic']]
 
-    print("focus region")
-    print(current_view_list)
-
     comparable_views = {}
 
     if no_of_zoom == 1:
@@ -258,21 +255,16 @@ def set_left_view_multi(comparable_views, current_view_list, spacing, left_resul
                 (x[0] - spacing) <= window_x[1] <= (x[1] + spacing))):
             continue
 
-        view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
+        view_diff = (sum([(a - b) ** 2 for a, b in zip(scags, current_view_list)]))**(1/2)
 
         new_diff1 = max(diff1, view_diff)
 
         if new_diff1 == view_diff:
             diff1 = view_diff
             diff1_scags = scags
-            left = view.split("; ")
-            left_view_x = ast.literal_eval(left[0])
-            left_view_y = ast.literal_eval(left[1])
 
-    lock.acquire()
     if diff1_scags:
         left_result_scags.append(diff1_scags)
-    lock.release()
 
 
 def naive_set_left_view(comparable_views, current_view_list, key_list, val_list):
@@ -303,7 +295,7 @@ def naive_set_left_view(comparable_views, current_view_list, key_list, val_list)
 
     if multithread:
         left_result_scags = manager.list()
-        p = multiprocessing.pool.ThreadPool(4)
+        p = multiprocessing.Pool(4)
 
         comparable_list = list(comparable_views.items())
         chunks = [comparable_list[i:i + int(len(comparable_list) / 4)] for i in
@@ -318,11 +310,12 @@ def naive_set_left_view(comparable_views, current_view_list, key_list, val_list)
         view = ""
 
         for i in range(len(left_result_scags)):
-            diff = distance.sqeuclidean(np.asarray(current_view_list), np.asarray(left_result_scags[i]))
+            diff = (sum([(a - b) ** 2 for a, b in zip(current_view_list, left_result_scags[i])]))**(1/2)
             if diff > best_diff:
                 best_diff = diff
                 view = key_list[val_list.index(left_result_scags[i])]
                 diff1_scags = left_result_scags[i]
+
         left = view.split("; ")
         left_view_x = ast.literal_eval(left[0])
         left_view_y = ast.literal_eval(left[1])
@@ -367,7 +360,7 @@ def set_right_view_multi(comparable_views, current_view_list, key_list, val_list
                  and ((x[0] - spacing) <= window_x[1] <= (x[1] + spacing))):
             continue
 
-        view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
+        view_diff = (sum([(a - b) ** 2 for a, b in zip(scags, current_view_list)]))**(1/2)
 
         for ele in heap:
             if (ele - 0.05) <= view_diff <= (ele + 0.05):
@@ -383,19 +376,11 @@ def set_right_view_multi(comparable_views, current_view_list, key_list, val_list
     for ele in top_ten:
         if ele == 0:
             continue
-        if distance.euclidean(np.asarray(ele), np.asarray(diff1_scags)) > diff_1_2:
-            diff_1_2 = distance.sqeuclidean(np.asarray(ele), np.asarray(diff1_scags))
+        if (sum([(a - b) ** 2 for a, b in zip(ele, diff1_scags)]))**(1/2) > diff_1_2:
+            diff_1_2 = (sum([(a - b) ** 2 for a, b in zip(ele, diff1_scags)]))**(1/2)
             diff2 = ele
 
-    if diff2 == 0 or len(heap) == 0:
-        naive_set_right_view(comparable_views, current_view_list, key_list, val_list)
-
-    view = key_list[val_list.index(diff2)]
-    right = view.split("; ")
-
-    lock.acquire()
     right_result_scags.append(diff2)
-    lock.release()
 
 
 def naive_set_right_view(comparable_views, current_view_list, key_list, val_list):
@@ -430,7 +415,7 @@ def naive_set_right_view(comparable_views, current_view_list, key_list, val_list
 
     if multithread:
         right_result_scags = manager.list()
-        p = multiprocessing.pool.ThreadPool(4)
+        p = multiprocessing.Pool(4)
 
         comparable_list = list(comparable_views.items())
         chunks = [comparable_list[i:i + int(len(comparable_list) / 4)] for i in
@@ -445,10 +430,11 @@ def naive_set_right_view(comparable_views, current_view_list, key_list, val_list
         view = ""
 
         for i in range(len(right_result_scags)):
-            diff = distance.sqeuclidean(np.asarray(current_view_list), np.asarray(right_result_scags[i]))
+            diff = (sum([(a - b) ** 2 for a, b in zip(current_view_list, right_result_scags[i])]))**(1/2)
             if diff > best_diff:
                 best_diff = diff
                 view = key_list[val_list.index(right_result_scags[i])]
+                diff2 = right_result_scags[i]
 
         right = view.split("; ")
         right_view_x = ast.literal_eval(right[0])
@@ -471,7 +457,7 @@ def naive_set_right_view(comparable_views, current_view_list, key_list, val_list
                      ((x[0] - space) <= window_x[1] <= (x[1] + space))):
                 continue
 
-            view_diff = distance.sqeuclidean(np.asarray(scags), np.asarray(current_view_list))
+            view_diff = distance.euclidean(np.asarray(scags), np.asarray(current_view_list))
 
             for ele in heap:
                 if (ele - 0.05) <= view_diff <= (ele + 0.05):
@@ -489,7 +475,7 @@ def naive_set_right_view(comparable_views, current_view_list, key_list, val_list
             if ele == 0:
                 continue
             if distance.euclidean(np.asarray(ele), np.asarray(diff1_scags)) > diff_1_2:
-                diff_1_2 = distance.sqeuclidean(np.asarray(ele), np.asarray(diff1_scags))
+                diff_1_2 = distance.euclidean(np.asarray(ele), np.asarray(diff1_scags))
                 diff2 = ele
 
         if diff2 == 0 or len(heap) == 0:
@@ -561,9 +547,6 @@ def leader_set_left_view(current_view_list):
             left_view_x = ast.literal_eval(left[0])
             left_view_y = ast.literal_eval(left[1])
 
-    print("left scags:")
-    print(diff1_scags)
-
     left_view = True
 
 
@@ -628,9 +611,6 @@ def leader_set_right_view(current_view_list):
             right = subleader.split("; ")
             right_view_x = ast.literal_eval(right[0])
             right_view_y = ast.literal_eval(right[1])
-
-    print("right scags:")
-    print(diff2)
 
     right_view = True
 
@@ -722,17 +702,6 @@ def return_left_data():
                                                             left_view_y[1])]).to_csv()
 
 
-@app.route('/get-center', methods=['GET', 'POST'])
-def return_center_data():
-    global center_view
-    while center_view == False:
-        time.sleep(0.100)
-
-    return df.loc[(df["avg_vote"] >= center_view_x[0]) & (df["avg_vote"] <= center_view_x[1]) & (
-            df["rlwide_gross_income"] >= center_view_y[0]) & (df["rlwide_gross_income"] <=
-                                                              center_view_y[1])].to_csv()
-
-
 @app.route('/get-right', methods=['GET', 'POST'])
 def return_right_data():
     global right_view
@@ -752,17 +721,6 @@ def return_left_scagnostics():
                   "Sparse": diff1_scags[3], "Striated": diff1_scags[4], "Convex": diff1_scags[5],
                   "Skinny": diff1_scags[6], "Stringy": diff1_scags[7], "Monotonic": diff1_scags[8]}
     return json.dumps(left_scags)
-
-
-@app.route('/get-center-scagnostics', methods=['GET', 'POST'])
-def return_center_scagnostics():
-    while center_view == False:
-        time.sleep(0.100)
-    center_scags = {"Outlying": diff2[0], "Skewed": diff2[1], "Clumpy": diff2[2], "Sparse": diff2[3],
-                    "Striated": diff2[4], "Convex": diff2[5], "Skinny": diff2[6], "Stringy": diff2[7],
-                    "Monotonic": diff2[8]}
-    return json.dumps(center_scags)
-
 
 @app.route('/get-right-scagnostics', methods=['GET', 'POST'])
 def return_right_scagnostics():
@@ -786,4 +744,4 @@ def return_current_scagnostics():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
-    #app.run()
+    app.run()
