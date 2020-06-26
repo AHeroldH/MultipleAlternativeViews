@@ -70,13 +70,13 @@
                             .append("svg")
                             .attr("id", "currentBar");
 
-            var leftBar = d3.select("body")
+            var leftBar = d3.select("#left")
                     .append("svg")
                     .attr("id", "leftBar")
                     .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                     .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15);
 
-            var rightBar = d3.select("body")
+            var rightBar = d3.select("#right")
                     .append("svg")
                     .attr("id", "rightBar")
                     .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
@@ -167,11 +167,11 @@
                             .selectAll("#currentBar")
                             .style("opacity", 0);
 
-                var leftScag = d3.select("body")
+                var leftScag = d3.select("#left")
                             .selectAll("#leftBar")
                             .style("opacity", 0);
 
-                var rightScag = d3.select("body")
+                var rightScag = d3.select("#right")
                             .selectAll("#rightBar")
                             .style("opacity", 0);
 
@@ -473,30 +473,30 @@
 
                             radius = Math.min(mainWidth * 0.35, (mainHeight * 0.35)) / 2 - 30;
                         }else if (viewid === "#left"){
-                            d3.select("body").select(viewid+"Bar").remove();
+                            d3.select("#left").select(viewid+"Bar").remove();
 
-                            currentDonut = d3.select("body")
+                            currentDonut = d3.select("#left")
                             .append("svg")
                                 .attr("id", viewid.substring(1)+"Bar")
                                 .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                                 .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                                .attr("transform", "translate(" + ((screen.availWidth/2)-(mainWidth*0.6)) + "," +
-                                    -(mainHeight*2.65) +")")
+                                .attr("transform", "translate(" + ((screen.availWidth/2)-(mainWidth*1.18)) + "," +
+                                    -(mainHeight*1.17) +")")
                             .append("g")
                                 .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2
                                     + ")");
 
                             radius = Math.min(mainWidth * 0.3, (mainHeight * 0.3)) / 2 - 30;
                         }else if (viewid === "#right"){
-                            d3.select("body").select(viewid+"Bar").remove();
+                            d3.select("#right").select(viewid+"Bar").remove();
 
-                            currentDonut = d3.select("body")
+                            currentDonut = d3.select("#right")
                             .append("svg")
                                 .attr("id", viewid.substring(1)+"Bar")
                                 .attr("width", (mainWidth + mainMargin.left + mainMargin.right) * 0.12)
                                 .attr("height", (mainHeight + mainMargin.top + mainMargin.bottom) * 0.15)
-                                .attr("transform", "translate(" + ((screen.availWidth/2)+(mainWidth*0.81)) + "," +
-                                    -(mainHeight*2.65) +")")
+                                .attr("transform", "translate(" + ((screen.availWidth/2)+(mainWidth*0.37)) + "," +
+                                    -(mainHeight*2.47) +")")
                             .append("g")
                                 .attr("transform", "translate(" + (mainWidth*0.15) / 2 + "," + (mainHeight*0.17) / 2
                                     + ")");
@@ -793,7 +793,7 @@
                     {# dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-left", "#left");
                     dispatch.call("updateAlternatives", this, "http://127.0.0.1:5000/get-right", "#right");
                     dispatchScag.call("updateBarchart", this, "http://127.0.0.1:5000/get-current-scagnostics",
-                        "#currentBar");  #}
+                        "#currentBar"); #}
 
                     dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-left", "#left");
                     dispatch.call("updateAlternatives", this, "https://multiplealternativeviews.azurewebsites.net/get-right", "#right");
