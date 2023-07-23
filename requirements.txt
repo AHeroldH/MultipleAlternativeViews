@@ -10,7 +10,7 @@ pytz==2020.1
 scipy==1.4.1
 seaborn==0.10.1
 six==1.15.0
-torch==1.5.0
+torch==1.13.1
 torchvision==0.6.0
 flask >=1.1.1
 flask_cors >=3.0.8
